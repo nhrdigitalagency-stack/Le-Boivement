@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Le Boivement — Lounge, Restauration & Boutique en Ligne | Yaoundé, Cameroun</title>
+    <meta
+      name="description"
+      content="Plateforme officielle Le Boivement à Yaoundé (Chapelle Obili, Cameroun) : carte gastronomique & grillades, lounge, événements, boutique en ligne, commandes et réservation de table."
+    />
+    <meta
+      name="keywords"
+      content="Le Boivement, Yaoundé, Chapelle Obili, Maahlox, restaurant Yaoundé, lounge Yaoundé, snack-bar Cameroun, commande en ligne Yaoundé, réservation table lounge"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Le Boivement — Yaoundé" />
+    <meta name="geo.region" content="CM-CE" />
+    <meta name="geo.placename" content="Yaoundé" />
+    <meta name="theme-color" content="#FAF7F2" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:site_name" content="Le Boivement — Yaoundé" />
+    <meta property="og:locale" content="fr_CM" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:title" content="Le Boivement — Lounge, Restauration & Boutique | Yaoundé" />
+    <meta
+      property="og:description"
+      content="Découvrez la carte, commandez en ligne, consultez les avis clients vérifiés et réservez votre table au Boivement à Yaoundé."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/aistudio/Logo_monochrome___Le_Boi_Vement___049401ad.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Le Boivement — Lounge, Restauration & Boutique | Yaoundé" />
+    <meta
+      name="twitter:description"
+      content="Restauration, snack-bar, lounge et boutique en ligne à Yaoundé, Cameroun."
+    />
+    <meta name="twitter:image" content="/assets/aistudio/Logo_monochrome___Le_Boi_Vement___049401ad.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Initial Structured Data (Schema.org Restaurant & Lounge) -->
+    <script id="boivement-jsonld" type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["Restaurant", "BarOrPub"],
+        "name": "Le Boivement",
+        "description": "Restauration, Snack-Bar, Lounge et Boutique en ligne à Yaoundé, Cameroun.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Yaoundé",
+          "addressRegion": "Centre",
+          "addressCountry": "CM"
+        },
+        "servesCuisine": ["Camerounaise", "Grillades", "Lounge & Tapas"],
+        "priceRange": "XAF"
+      }
+    </script>
+  </head>
+  <body class="bg-[#FAF7F2] dark:bg-[#101014] text-[#101014] dark:text-[#FAF7F2] antialiased selection:bg-[#D8B77B] selection:text-[#101014] transition-colors duration-200 overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Le Boivement — Lounge, Restauration & Boutique",
+  "description": "Plateforme officielle de restauration, lounge, événements, boutique en ligne et gestion opérationnelle pour Le Boivement à Yaoundé, Cameroun.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

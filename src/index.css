@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-primary: #FAF7F2;
+    --bg-surface: #FFFFFF;
+    --bg-subtle: #F2ECE1;
+    --text-primary: #101014;
+    --text-secondary: #5C564F;
+    --accent-champagne: #D8B77B;
+    --accent-copper: #91652E;
+    --border-subtle: rgba(16, 16, 20, 0.12);
+  }
+
+  html.dark {
+    --bg-primary: #101014;
+    --bg-surface: #1C1C23;
+    --bg-subtle: #14141A;
+    --text-primary: #FAF7F2;
+    --text-secondary: #AAA6A1;
+    --accent-champagne: #D8B77B;
+    --accent-copper: #91652E;
+    --border-subtle: rgba(255, 255, 255, 0.10);
+  }
+
+  html {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .font-serif-display {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-mono-tabular {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ============================================================================
+   ADAPTIVE LIGHT MODE ENGINE (Default = Light Mode)
+   Automatically harmonizes dark-palette utility classes when html is in Light Mode
+   while preserving dark mode fidelity when html.dark is active.
+   ============================================================================ */
+html:not(.dark) body {
+  background-color: #FAF7F2;
+  color: #101014;
+}
+
+html:not(.dark) :where(.bg-\[\#101014\]:not(.keep-dark)) {
+  background-color: #FAF7F2 !important;
+}
+
+html:not(.dark) :where(.bg-\[\#101014\]\/95:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#101014\]\/90:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#101014\]\/80:not(.keep-dark)) {
+  background-color: rgba(250, 247, 242, 0.95) !important;
+}
+
+html:not(.dark) :where(.bg-\[\#14141A\]:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#16161D\]:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#17171E\]:not(.keep-dark)) {
+  background-color: #F3EDE2 !important;
+}
+
+html:not(.dark) :where(.bg-\[\#1C1C23\]:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#1C1C23\]\/90:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#1C1C23\]\/80:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#1C1C23\]\/70:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#1C1C23\]\/60:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#1C1C23\]\/50:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#1C1C23\]\/40:not(.keep-dark)) {
+  background-color: #FFFFFF !important;
+  box-shadow: 0 2px 12px rgba(16, 16, 20, 0.04);
+}
+
+html:not(.dark) :where(.text-\[\#FAF7F2\]:not(.keep-light-text)),
+html:not(.dark) :where(.text-\[\#FAF7F2\]\/90:not(.keep-light-text)),
+html:not(.dark) :where(.text-\[\#FAF7F2\]\/85:not(.keep-light-text)),
+html:not(.dark) :where(.text-\[\#FAF7F2\]\/80:not(.keep-light-text)),
+html:not(.dark) :where(.text-white:not(.keep-light-text)) {
+  color: #101014 !important;
+}
+
+html:not(.dark) :where(.text-\[\#AAA6A1\]:not(.keep-light-text)) {
+  color: #5C564F !important;
+}
+
+/* Ensure champagne text remains high-contrast copper-gold on light surfaces */
+html:not(.dark) :where(.text-\[\#D8B77B\]:not(.keep-light-text)) {
+  color: #8C5E24 !important;
+}
+
+html:not(.dark) :where(.border-white\/5),
+html:not(.dark) :where(.border-white\/10),
+html:not(.dark) :where(.border-white\/15),
+html:not(.dark) :where(.border-white\/20) {
+  border-color: rgba(16, 16, 20, 0.12) !important;
+}
+
+html:not(.dark) :where(.divide-white\/5) > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) :where(.divide-white\/10) > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(16, 16, 20, 0.10) !important;
+}
+
+html:not(.dark) :where(.bg-white\/5:not(.keep-dark)),
+html:not(.dark) :where(.bg-white\/10:not(.keep-dark)) {
+  background-color: rgba(16, 16, 20, 0.05) !important;
+}
+
+/* Preserve light text inside intentional dark art compositions (.keep-dark) */
+html:not(.dark) .keep-dark,
+html:not(.dark) .keep-dark .text-\[\#FAF7F2\],
+html:not(.dark) .keep-dark .text-white {
+  color: #FAF7F2 !important;
+}
+
+html:not(.dark) .keep-dark .text-\[\#AAA6A1\] {
+  color: #C8C3BC !important;
+}
+
+html:not(.dark) .keep-dark .text-\[\#D8B77B\] {
+  color: #D8B77B !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #C5B9A5;
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2C2C36;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D8B77B;
+}
