@@ -54,14 +54,15 @@ const fallbackSeed = createInitialSeed();
 const AppContext = createContext<AppContextValue | undefined>(undefined);
 
 const CART_STORAGE_KEY = 'le_boivement_cart_v1';
-const THEME_STORAGE_KEY = 'le_boivement_theme_v2';
+const THEME_STORAGE_KEY = 'le_boivement_theme';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLang] = useState<Language>('fr');
   // Light mode is strictly the default ('light')
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     try {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      const saved =
+        localStorage.getItem(THEME_STORAGE_KEY) || localStorage.getItem('le_boivement_theme_v2');
       if (saved === 'dark' || saved === 'light') return saved;
     } catch {
       // ignore storage errors
@@ -107,10 +108,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
-      metaTheme.setAttribute('content', theme === 'dark' ? '#101014' : '#FAF7F2');
+      metaTheme.setAttribute('content', theme === 'dark' ? '#101014' : '#FBF8F3');
     }
     try {
       localStorage.setItem(THEME_STORAGE_KEY, theme);
+      localStorage.setItem('le_boivement_theme_v2', theme);
     } catch {
       // ignore
     }

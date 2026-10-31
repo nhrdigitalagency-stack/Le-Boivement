@@ -258,16 +258,22 @@ export const Header: React.FC = () => {
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 bg-[#1C1C23] border border-[#D8B77B] text-[#FAF7F2] px-4 py-3 rounded-lg shadow-2xl flex items-center justify-between sm:justify-start gap-3 text-sm"
+          className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 border px-4 py-3 rounded-lg shadow-2xl flex items-center justify-between sm:justify-start gap-3 text-sm ${
+            isLight
+              ? 'bg-white border-[#91652E] text-[#1E1915]'
+              : 'bg-[#1C1C23] border-[#D8B77B] text-[#FAF7F2]'
+          }`}
         >
           <div className="flex items-center gap-2.5 min-w-0">
-            <ShoppingBag className="w-4 h-4 text-[#D8B77B] shrink-0" />
-            <span className="truncate">{cartToast}</span>
+            <ShoppingBag className={`w-4 h-4 shrink-0 ${isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'}`} />
+            <span className="truncate font-medium">{cartToast}</span>
           </div>
           <button
             type="button"
             onClick={() => navigate('/panier')}
-            className="text-xs font-semibold text-[#D8B77B] underline ml-2 whitespace-nowrap shrink-0"
+            className={`text-xs font-semibold underline ml-2 whitespace-nowrap shrink-0 ${
+              isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'
+            }`}
           >
             {t.nav.cart}
           </button>
@@ -277,15 +283,23 @@ export const Header: React.FC = () => {
       {/* Accessible Mobile Navigation Panel */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 lg:hidden bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 lg:hidden bg-black/55 backdrop-blur-sm"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="ml-auto w-full max-w-xs h-full bg-[#101014] border-l border-white/10 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto"
+            className={`ml-auto w-full max-w-xs h-full border-l p-5 sm:p-6 flex flex-col justify-between overflow-y-auto ${
+              isLight
+                ? 'bg-[#FBF8F3] border-[#91652E]/20 text-[#1E1915]'
+                : 'bg-[#141218] border-white/10 text-[#FAF7F2]'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <div>
-              <div className="flex items-center justify-between pb-5 border-b border-white/10">
+              <div
+                className={`flex items-center justify-between pb-5 border-b ${
+                  isLight ? 'border-[#91652E]/15' : 'border-white/10'
+                }`}
+              >
                 <BrandLogo
                   variant={isLight ? 'dark-on-light' : 'light-on-dark'}
                   className="h-9"
@@ -293,7 +307,11 @@ export const Header: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 text-[#AAA6A1] hover:text-[#FAF7F2]"
+                  className={`p-2 rounded-lg ${
+                    isLight
+                      ? 'text-[#1E1915] hover:bg-[#F4ECE0]'
+                      : 'text-[#AAA6A1] hover:text-[#FAF7F2]'
+                  }`}
                   aria-label="Fermer le menu"
                 >
                   <X className="w-5 h-5" />
@@ -301,8 +319,14 @@ export const Header: React.FC = () => {
               </div>
 
               {/* Theme Toggle inside Mobile Drawer */}
-              <div className="mt-4 flex items-center justify-between px-3 py-2.5 rounded-lg bg-[#1C1C23] border border-white/10">
-                <span className="text-xs font-medium text-[#FAF7F2]">
+              <div
+                className={`mt-4 flex items-center justify-between px-3 py-2.5 rounded-lg border ${
+                  isLight
+                    ? 'bg-white border-[#91652E]/20 text-[#1E1915]'
+                    : 'bg-[#1E1B24] border-white/10 text-[#FAF7F2]'
+                }`}
+              >
+                <span className="text-xs font-medium">
                   {lang === 'fr' ? 'Apparence du site' : 'Site appearance'}
                 </span>
                 <ThemeToggle />
@@ -319,7 +343,11 @@ export const Header: React.FC = () => {
                     }}
                     className={`w-full text-left px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                       pathname === item.href
-                        ? 'bg-[#1C1C23] text-[#D8B77B] font-semibold'
+                        ? isLight
+                          ? 'bg-[#F4ECE0] text-[#91652E] font-semibold'
+                          : 'bg-[#1E1B24] text-[#D8B77B] font-semibold'
+                        : isLight
+                        ? 'text-[#1E1915] hover:bg-[#F4ECE0]/70'
                         : 'text-[#FAF7F2] hover:bg-white/5'
                     }`}
                   >
@@ -329,7 +357,11 @@ export const Header: React.FC = () => {
               </nav>
             </div>
 
-            <div className="pt-6 border-t border-white/10 space-y-3">
+            <div
+              className={`pt-6 border-t space-y-3 ${
+                isLight ? 'border-[#91652E]/15' : 'border-white/10'
+              }`}
+            >
               {settings.reservationsEnabled && (
                 <button
                   type="button"
@@ -337,7 +369,7 @@ export const Header: React.FC = () => {
                     setMobileMenuOpen(false);
                     navigate('/reservation');
                   }}
-                  className="keep-light-text w-full py-2.5 px-4 bg-[#91652E] text-white font-semibold text-sm rounded-md"
+                  className="keep-light-text w-full py-2.5 px-4 bg-[#91652E] text-white font-semibold text-sm rounded-md hover:bg-[#7A5324] transition-colors"
                 >
                   {t.nav.reserve}
                 </button>
@@ -349,7 +381,11 @@ export const Header: React.FC = () => {
                     setMobileMenuOpen(false);
                     navigate(authUser ? '/mon-compte' : '/connexion');
                   }}
-                  className="py-2 px-3 bg-[#1C1C23] text-[#FAF7F2] text-xs font-medium rounded-md border border-white/10"
+                  className={`py-2 px-3 text-xs font-medium rounded-md border ${
+                    isLight
+                      ? 'bg-white text-[#1E1915] border-[#91652E]/25 hover:bg-[#F4ECE0]'
+                      : 'bg-[#1E1B24] text-[#FAF7F2] border-white/10'
+                  }`}
                 >
                   {authUser ? t.nav.account : t.nav.login}
                 </button>
@@ -359,7 +395,11 @@ export const Header: React.FC = () => {
                     setMobileMenuOpen(false);
                     navigate('/admin');
                   }}
-                  className="py-2 px-3 bg-[#1C1C23] text-[#D8B77B] text-xs font-medium rounded-md border border-[#D8B77B]/30"
+                  className={`py-2 px-3 text-xs font-semibold rounded-md border ${
+                    isLight
+                      ? 'bg-[#F4ECE0] text-[#91652E] border-[#91652E]/35'
+                      : 'bg-[#1E1B24] text-[#D8B77B] border-[#D8B77B]/30'
+                  }`}
                 >
                   {t.nav.admin}
                 </button>
@@ -376,30 +416,46 @@ export const Header: React.FC = () => {
           onClick={() => setSearchModalOpen(false)}
         >
           <div
-            className="w-full max-w-xl bg-[#1C1C23] border border-white/15 rounded-xl p-4 sm:p-5 shadow-2xl"
+            className={`w-full max-w-xl border rounded-xl p-4 sm:p-5 shadow-2xl ${
+              isLight
+                ? 'bg-white border-[#91652E]/25 text-[#1E1915]'
+                : 'bg-[#1C1C23] border-white/15 text-[#FAF7F2]'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <form onSubmit={handleQuickSearchSubmit} className="flex items-center gap-3">
-              <Search className="w-5 h-5 text-[#D8B77B] shrink-0" />
+              <Search className={`w-5 h-5 shrink-0 ${isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'}`} />
               <input
                 ref={searchInputRef}
                 type="text"
                 value={quickQuery}
                 onChange={(e) => setQuickQuery(e.target.value)}
                 placeholder={t.nav.searchPlaceholder}
-                className="w-full bg-transparent text-sm text-[#FAF7F2] placeholder-[#AAA6A1] focus:outline-none"
+                className={`w-full bg-transparent text-sm focus:outline-none ${
+                  isLight
+                    ? 'text-[#1E1915] placeholder-[#655B50]'
+                    : 'text-[#FAF7F2] placeholder-[#AAA6A1]'
+                }`}
               />
               <button
                 type="button"
                 onClick={() => setSearchModalOpen(false)}
-                className="text-xs text-[#AAA6A1] hover:text-[#FAF7F2] px-2 py-1"
+                className={`text-xs px-2 py-1 rounded ${
+                  isLight
+                    ? 'text-[#655B50] hover:text-[#1E1915] hover:bg-[#F4ECE0]'
+                    : 'text-[#AAA6A1] hover:text-[#FAF7F2]'
+                }`}
               >
                 ESC
               </button>
             </form>
 
             {quickResults.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
+              <div
+                className={`mt-4 pt-4 border-t space-y-2 ${
+                  isLight ? 'border-[#91652E]/15' : 'border-white/10'
+                }`}
+              >
                 {quickResults.map((item) => (
                   <button
                     key={item.id}
@@ -408,18 +464,24 @@ export const Header: React.FC = () => {
                       setSearchModalOpen(false);
                       navigate(`/produits/${item.slug}`);
                     }}
-                    className="w-full flex items-center justify-between p-2.5 rounded-lg hover:bg-white/5 text-left transition-colors gap-3"
+                    className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-colors gap-3 ${
+                      isLight ? 'hover:bg-[#F4ECE0]' : 'hover:bg-white/5'
+                    }`}
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-[#FAF7F2] truncate">
+                      <p className="text-sm font-medium truncate">
                         {lang === 'fr' ? item.nameFr : item.nameEn}
                       </p>
-                      <p className="text-xs text-[#AAA6A1] font-mono-tabular">
+                      <p className="text-xs opacity-75 font-mono-tabular">
                         {item.publicRef} ·{' '}
                         {(item.availableBaseUnits || 0) > 0 ? t.shop.inStock : t.shop.outOfStock}
                       </p>
                     </div>
-                    <span className="font-mono-tabular text-sm text-[#D8B77B] shrink-0">
+                    <span
+                      className={`font-mono-tabular text-sm font-semibold shrink-0 ${
+                        isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'
+                      }`}
+                    >
                       {formatXaf(item.basePriceXaf, lang)}
                     </span>
                   </button>
@@ -427,11 +489,17 @@ export const Header: React.FC = () => {
               </div>
             )}
 
-            <div className="mt-4 pt-3 border-t border-white/10 flex justify-end">
+            <div
+              className={`mt-4 pt-3 border-t flex justify-end ${
+                isLight ? 'border-[#91652E]/15' : 'border-white/10'
+              }`}
+            >
               <button
                 type="button"
                 onClick={handleQuickSearchSubmit}
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#D8B77B] hover:underline"
+                className={`inline-flex items-center gap-1.5 text-xs font-semibold hover:underline ${
+                  isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'
+                }`}
               >
                 <span>
                   {lang === 'fr'

@@ -320,19 +320,41 @@ export const ExperiencePage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-28 pb-20 bg-[#101014] text-[#FAF7F2]">
-      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="border-b border-white/10 pb-8">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
+    <div className="min-h-screen pt-20 pb-20 bg-[#101014] text-[#FAF7F2]">
+      {/* Page Hero with Video Background & Reduced-Opacity Black Overlay */}
+      <section className="keep-dark relative py-16 sm:py-24 mb-12 overflow-hidden border-b border-[#D8B77B]/20">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source
+            src="/assets/aistudio/People_socializing_in_outdoor_lo__fbe67d64_18c44ee2.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div
+          aria-hidden="true"
+          className="keep-dark absolute inset-0 bg-black/55 bg-gradient-to-b from-black/65 via-black/50 to-black/70 z-[1]"
+        />
+        <div className="relative z-10 max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="keep-light-text text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
             ART DE VIVRE & HOSPITALITÉ À YAOUNDÉ
           </p>
-          <h1 className="font-serif-display text-4xl sm:text-5xl font-semibold">
+          <h1 className="keep-light-text font-serif-display text-3xl sm:text-5xl font-semibold text-white">
             {t.nav.experience} — {settings.brandName}
           </h1>
-          <p className="text-sm text-[#AAA6A1] mt-3 max-w-2xl leading-relaxed">
+          <p className="keep-light-text text-sm sm:text-base text-[#FAF7F2]/90 mt-3 max-w-2xl leading-relaxed">
             {t.home.presentationBody}
           </p>
         </div>
+      </section>
+
+      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {items.map((item, idx) => (

@@ -588,20 +588,20 @@ export const AdminPortalPage: React.FC = () => {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Sidebar Navigation (17 Modules) */}
-          <aside className="lg:col-span-3 bg-[#1C1C23] border border-white/10 rounded-xl p-3 space-y-1">
+          {/* Sidebar Navigation (17 Modules — Mobile-First Scrollable Strip on Small Screens, Vertical Sidebar on Desktop) */}
+          <aside className="lg:col-span-3 bg-[#1C1C23] border border-white/10 rounded-xl p-2.5 sm:p-3 flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-1.5 lg:gap-0 lg:space-y-1 max-w-full">
             {navTabs.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-left transition-colors ${
+                className={`shrink-0 lg:w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-left transition-colors whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'bg-[#D8B77B] text-[#101014] font-semibold'
+                    ? 'keep-light-text bg-[#91652E] text-white font-semibold'
                     : 'text-[#FAF7F2]/85 hover:bg-white/5'
                 }`}
               >
-                <div className="flex items-center gap-2.5 min-w-0">
+                <div className="flex items-center gap-2 min-w-0">
                   {tab.icon}
                   <span className="truncate">{tab.label}</span>
                 </div>
@@ -615,7 +615,7 @@ export const AdminPortalPage: React.FC = () => {
           </aside>
 
           {/* Main Admin Viewport */}
-          <main className="lg:col-span-9 space-y-6">
+          <main className="lg:col-span-9 min-w-0 w-full space-y-6">
             {!adminState ? (
               <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-12 text-center text-sm text-[#AAA6A1]">
                 Chargement des données d’exploitation...

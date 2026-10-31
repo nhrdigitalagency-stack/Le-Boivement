@@ -15,27 +15,29 @@
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Le Boivement — Yaoundé" />
     <meta name="geo.region" content="CM-CE" />
-    <meta name="geo.placename" content="Yaoundé" />
-    <meta name="theme-color" content="#FAF7F2" />
+    <meta name="geo.placename" content="Yaoundé, Chapelle Obili" />
+    <meta name="geo.position" content="3.8578;11.4914" />
+    <meta name="ICBM" content="3.8578, 11.4914" />
+    <meta name="theme-color" content="#FBF8F3" />
 
     <!-- Open Graph / Social Sharing -->
     <meta property="og:site_name" content="Le Boivement — Yaoundé" />
     <meta property="og:locale" content="fr_CM" />
     <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:title" content="Le Boivement — Lounge, Restauration & Boutique | Yaoundé" />
+    <meta property="og:title" content="Le Boivement — Restauration, Lounge & Boutique | Yaoundé" />
     <meta
       property="og:description"
-      content="Découvrez la carte, commandez en ligne, consultez les avis clients vérifiés et réservez votre table au Boivement à Yaoundé."
+      content="Découvrez la carte de grillades et boissons, commandez en ligne, consultez les avis clients vérifiés et réservez votre table au Boivement à Yaoundé (Chapelle Obili)."
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/assets/aistudio/Logo_monochrome___Le_Boi_Vement___049401ad.png" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Le Boivement — Lounge, Restauration & Boutique | Yaoundé" />
+    <meta name="twitter:title" content="Le Boivement — Restauration, Lounge & Boutique | Yaoundé" />
     <meta
       name="twitter:description"
-      content="Restauration, snack-bar, lounge et boutique en ligne à Yaoundé, Cameroun."
+      content="Restauration braisée, snack-bar, lounge et boutique en ligne à Chapelle Obili, Yaoundé, Cameroun."
     />
     <meta name="twitter:image" content="/assets/aistudio/Logo_monochrome___Le_Boi_Vement___049401ad.png" />
 
@@ -46,25 +48,33 @@
       rel="stylesheet"
     />
 
-    <!-- Initial Structured Data (Schema.org Restaurant & Lounge) -->
+    <!-- Initial Structured Data (Schema.org LocalBusiness, Restaurant & Lounge) -->
     <script id="boivement-jsonld" type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": ["Restaurant", "BarOrPub"],
+        "@type": ["Restaurant", "BarOrPub", "NightClub", "LocalBusiness"],
         "name": "Le Boivement",
-        "description": "Restauration, Snack-Bar, Lounge et Boutique en ligne à Yaoundé, Cameroun.",
+        "description": "Restauration au feu de bois, Snack-Bar, Lounge, Glacier et Boutique en ligne à Chapelle Obili, Yaoundé, Cameroun.",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Quartier Chapelle Obili",
           "addressLocality": "Yaoundé",
           "addressRegion": "Centre",
           "addressCountry": "CM"
         },
-        "servesCuisine": ["Camerounaise", "Grillades", "Lounge & Tapas"],
-        "priceRange": "XAF"
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 3.8578,
+          "longitude": 11.4914
+        },
+        "servesCuisine": ["Camerounaise", "Grillades au feu de bois", "Lounge & Tapas", "Glacier"],
+        "priceRange": "XAF",
+        "currenciesAccepted": "XAF",
+        "acceptsReservations": true
       }
     </script>
   </head>
-  <body class="bg-[#FAF7F2] dark:bg-[#101014] text-[#101014] dark:text-[#FAF7F2] antialiased selection:bg-[#D8B77B] selection:text-[#101014] transition-colors duration-200 overflow-x-hidden">
+  <body class="bg-[#FBF8F3] dark:bg-[#101014] text-[#1E1915] dark:text-[#FAF7F2] antialiased selection:bg-[#D8B77B] selection:text-[#101014] transition-colors duration-200 overflow-x-hidden max-w-[100vw]">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

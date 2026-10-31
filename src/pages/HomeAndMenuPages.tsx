@@ -71,50 +71,57 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="bg-[#101014] text-[#FAF7F2]">
-      {/* 1. HERO SECTION — Warm & Luminous in Light Mode, Deep Warm Lounge in Dark Mode */}
-      <section
-        className={`relative min-h-[85vh] pt-28 pb-20 flex items-center overflow-hidden border-b ${
-          isLight
-            ? 'bg-gradient-to-br from-[#FBF8F3] via-[#F5ECE0] to-[#EADBC6] border-[#91652E]/15 text-[#1E1915]'
-            : 'bg-gradient-to-br from-[#16131A] via-[#1F1B24] to-[#27212E] border-white/10 text-[#FAF7F2]'
-        }`}
-      >
+      {/* 1. HERO SECTION — Video Background + Reduced-Opacity Black Overlay */}
+      <section className="keep-dark relative min-h-[86vh] pt-28 pb-20 flex items-center overflow-hidden border-b border-[#D8B77B]/20 text-[#FAF7F2]">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source
+            src="/assets/aistudio/People_socializing_in_outdoor_lo__fbe67d64_18c44ee2.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        {/* Superposition d'arrière-plan couleur noire avec opacité réduite */}
         <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: isLight
-              ? 'radial-gradient(circle at 78% 28%, rgba(216, 183, 123, 0.35) 0%, transparent 55%), radial-gradient(circle at 18% 82%, rgba(145, 101, 46, 0.14) 0%, transparent 50%)'
-              : 'radial-gradient(circle at 75% 30%, rgba(216, 183, 123, 0.22) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(145, 101, 46, 0.18) 0%, transparent 50%)',
-          }}
+          aria-hidden="true"
+          className="keep-dark absolute inset-0 bg-black/55 bg-gradient-to-b from-black/65 via-black/50 to-black/70 z-[1]"
         />
 
         <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#91652E]/10 border border-[#91652E]/25 text-xs tracking-widest uppercase font-semibold text-[#91652E]">
-                <MapPin className="w-3.5 h-3.5" />
+              <div className="keep-light-text inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-[#D8B77B]/40 text-xs tracking-widest uppercase font-semibold text-[#D8B77B]">
+                <MapPin className="w-3.5 h-3.5 shrink-0" />
                 <span>{t.hero.kicker}</span>
               </div>
 
               <h1
-                className="font-serif-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#FAF7F2] leading-[1.1] tracking-tight"
+                className="keep-light-text font-serif-display text-3xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] tracking-tight drop-shadow-sm"
                 style={{ textWrap: 'balance' }}
               >
                 {settings.brandName} —{' '}
                 {lang === 'fr' ? settings.editorialTaglineFr : settings.editorialTaglineEn}
               </h1>
 
-              <p className="text-base sm:text-lg text-[#AAA6A1] max-w-2xl leading-relaxed">
+              <p className="keep-light-text text-sm sm:text-lg text-[#FAF7F2]/90 max-w-2xl leading-relaxed drop-shadow-sm">
                 {t.home.presentationBody}
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center gap-3.5">
+              <div className="pt-2 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3.5">
                 <button
                   type="button"
                   onClick={() => navigate('/carte')}
-                  className="keep-light-text px-6 py-3.5 bg-[#91652E] text-white font-semibold text-sm rounded-lg hover:bg-[#7A5324] shadow-md transition-all inline-flex items-center gap-2 whitespace-nowrap shrink-0"
+                  className="keep-light-text justify-center px-6 py-3.5 bg-[#91652E] text-white font-semibold text-sm rounded-lg hover:bg-[#7A5324] shadow-lg transition-all inline-flex items-center gap-2 whitespace-nowrap shrink-0"
                 >
-                  <Utensils className="w-4 h-4" />
+                  <Utensils className="w-4 h-4 shrink-0" />
                   <span>{t.hero.discoverMenu}</span>
                 </button>
 
@@ -122,13 +129,9 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/boutique')}
-                    className={`px-6 py-3.5 font-semibold text-sm rounded-lg border transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0 ${
-                      isLight
-                        ? 'bg-white text-[#1E1915] border-[#91652E]/35 hover:border-[#91652E] shadow-sm'
-                        : 'bg-[#242029] text-[#FAF7F2] border-[#D8B77B]/40 hover:border-[#D8B77B]'
-                    }`}
+                    className="keep-light-text justify-center px-6 py-3.5 font-semibold text-sm rounded-lg border bg-black/50 backdrop-blur-md text-white border-[#D8B77B]/50 hover:bg-black/70 hover:border-[#D8B77B] transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#D8B77B]" />
+                    <ShoppingBag className="w-4 h-4 text-[#D8B77B] shrink-0" />
                     <span>{t.hero.orderOnline}</span>
                   </button>
                 )}
@@ -137,19 +140,15 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/reservation')}
-                    className={`px-6 py-3.5 font-medium text-sm rounded-lg border transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0 ${
-                      isLight
-                        ? 'bg-[#F4ECE0] text-[#1E1915] border-[#91652E]/25 hover:bg-[#EADBC6]'
-                        : 'bg-transparent text-[#FAF7F2] border-white/20 hover:bg-white/5'
-                    }`}
+                    className="keep-light-text justify-center px-6 py-3.5 font-medium text-sm rounded-lg border bg-white/10 backdrop-blur-md text-white border-white/30 hover:bg-white/20 transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0"
                   >
-                    <Calendar className="w-4 h-4 text-[#D8B77B]" />
+                    <Calendar className="w-4 h-4 text-[#D8B77B] shrink-0" />
                     <span>{t.hero.bookTable}</span>
                   </button>
                 )}
               </div>
 
-              <p className="text-xs text-[#AAA6A1] pt-3 border-t border-white/10 max-w-xl">
+              <p className="keep-light-text text-xs text-[#FAF7F2]/80 pt-3 border-t border-white/20 max-w-xl">
                 {t.hero.framingNote}
               </p>
             </div>
@@ -157,29 +156,39 @@ export const HomePage: React.FC = () => {
             {/* Right Visual Showcase: Warm Hospitality Frame with Official Emblem & Culinary Preview */}
             <div className="lg:col-span-5">
               <div
-                className={`rounded-2xl p-6 sm:p-8 border shadow-xl relative overflow-hidden space-y-5 ${
+                className={`rounded-2xl p-5 sm:p-7 border shadow-2xl relative overflow-hidden space-y-5 backdrop-blur-md ${
                   isLight
-                    ? 'bg-white/95 border-[#91652E]/20'
-                    : 'bg-[#1E1B24]/95 border-[#D8B77B]/25'
+                    ? 'bg-[#FBF8F3]/95 border-[#91652E]/30 text-[#1E1915]'
+                    : 'bg-[#18151E]/90 border-[#D8B77B]/30 text-[#FAF7F2]'
                 }`}
               >
-                <div className="flex items-center justify-between text-xs text-[#AAA6A1] pb-3 border-b border-white/10">
-                  <span className="font-semibold tracking-wider uppercase text-[#D8B77B]">
+                <div
+                  className={`flex items-center justify-between text-xs pb-3 border-b ${
+                    isLight
+                      ? 'border-[#91652E]/15 text-[#655B50]'
+                      : 'border-white/10 text-[#AAA6A1]'
+                  }`}
+                >
+                  <span
+                    className={`font-semibold tracking-wider uppercase ${
+                      isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'
+                    }`}
+                  >
                     SNACK · BAR · LOUNGE
                   </span>
                   <span>{settings.city}</span>
                 </div>
 
                 <div
-                  className={`py-8 px-6 rounded-xl border flex items-center justify-center ${
+                  className={`py-6 sm:py-8 px-4 sm:px-6 rounded-xl border flex items-center justify-center ${
                     isLight
-                      ? 'bg-gradient-to-br from-[#FBF8F3] to-[#F2E6D4] border-[#91652E]/15'
-                      : 'bg-[#151219] border-white/10'
+                      ? 'bg-gradient-to-br from-[#FFFFFF] to-[#F2E6D4] border-[#91652E]/20'
+                      : 'bg-[#121016] border-white/10'
                   }`}
                 >
                   <BrandLogo
                     variant={isLight ? 'dark-on-light' : 'light-on-dark'}
-                    className="h-24 sm:h-32"
+                    className="h-20 sm:h-28"
                   />
                 </div>
 
@@ -187,14 +196,14 @@ export const HomePage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <div
                     onClick={() => navigate('/carte')}
-                    className="cursor-pointer rounded-xl overflow-hidden border border-white/10 relative group h-28"
+                    className="cursor-pointer rounded-xl overflow-hidden border border-white/15 relative group h-24 sm:h-28"
                   >
                     <img
                       src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80"
                       alt="Grillades & Cuisine"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="keep-light-text absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-2.5 flex items-end">
+                    <div className="keep-light-text absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-2.5 flex items-end">
                       <span className="keep-light-text text-xs font-semibold text-white">
                         {lang === 'fr' ? 'Grillades & Plats' : 'Charcoal Grill'}
                       </span>
@@ -203,14 +212,14 @@ export const HomePage: React.FC = () => {
 
                   <div
                     onClick={() => navigate('/experience')}
-                    className="cursor-pointer rounded-xl overflow-hidden border border-white/10 relative group h-28"
+                    className="cursor-pointer rounded-xl overflow-hidden border border-white/15 relative group h-24 sm:h-28"
                   >
                     <img
                       src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
                       alt="Ambiance Lounge"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="keep-light-text absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-2.5 flex items-end">
+                    <div className="keep-light-text absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-2.5 flex items-end">
                       <span className="keep-light-text text-xs font-semibold text-white">
                         {lang === 'fr' ? 'Espace Lounge' : 'Lounge Space'}
                       </span>
@@ -218,12 +227,20 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-[#AAA6A1]">
+                <div
+                  className={`pt-2 border-t flex items-center justify-between text-xs ${
+                    isLight
+                      ? 'border-[#91652E]/15 text-[#655B50]'
+                      : 'border-white/10 text-[#AAA6A1]'
+                  }`}
+                >
                   <span>{settings.neighborhood || 'Chapelle Obili'}</span>
                   <button
                     type="button"
                     onClick={() => navigate('/experience')}
-                    className="font-semibold text-[#D8B77B] hover:underline inline-flex items-center gap-1"
+                    className={`font-semibold hover:underline inline-flex items-center gap-1 ${
+                      isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'
+                    }`}
                   >
                     <span>{t.nav.experience}</span>
                     <ArrowRight className="w-3.5 h-3.5" />

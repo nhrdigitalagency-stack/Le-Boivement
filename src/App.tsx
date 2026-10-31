@@ -58,11 +58,11 @@ export default function App() {
   return (
     <AppProvider>
       <SeoHead />
-      <div className="min-h-screen flex flex-col bg-[#FAF7F2] dark:bg-[#101014] text-[#101014] dark:text-[#FAF7F2] transition-colors duration-200">
+      <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden flex flex-col bg-[#FBF8F3] dark:bg-[#101014] text-[#1E1915] dark:text-[#FAF7F2] transition-colors duration-200">
         <Header />
-        <div className="flex-1">
+        <main className="flex-1 w-full min-w-0">
           <RouteDispatcher />
-        </div>
+        </main>
         <Footer />
       </div>
     </AppProvider>
