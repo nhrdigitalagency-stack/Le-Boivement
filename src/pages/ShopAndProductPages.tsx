@@ -520,15 +520,10 @@ export const ProductDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
                 theme={product.visualTheme}
                 title={lang === 'fr' ? product.nameFr : product.nameEn}
                 subtitle={product.publicRef}
-                isDemo={product.isDemo}
+                isDemo={false}
                 lang={lang}
                 className="aspect-[4/3]"
               />
-              {product.isDemo && (
-                <div className="p-4 bg-[#16161C] border-t border-white/10 text-xs text-[#AAA6A1]">
-                  {t.badges.demoProduct}
-                </div>
-              )}
             </div>
           </div>
 

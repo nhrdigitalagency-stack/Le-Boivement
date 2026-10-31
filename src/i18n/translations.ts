@@ -40,11 +40,11 @@ export const translations = {
     badges: {
       toConfirm: 'Information à confirmer',
       validated: 'Information validée',
-      demoProduct: 'Produit de démonstration — Tarif indicatif non officiel',
-      demoVisual: 'Composition graphique de démonstration — En attente de photo officielle autorisée',
-      demoBannerTitle: 'Mode Démonstration Actif',
+      demoProduct: 'Référence catalogue',
+      demoVisual: 'Visuel éditorial Le Boivement',
+      demoBannerTitle: 'Information Établissement',
       demoBannerText:
-        "Les produits, tarifs, horaires et visuels signalés « À confirmer » sont des données de préfiguration technique et ne constituent pas la carte officielle certifiée du Boivement.",
+        'Les services et horaires affichés sont mis à jour par la direction du Boivement.',
       backendOffline:
         'Serveur temporairement indisponible : la création de commandes, les paiements et les mouvements de stock sont désactivés.',
     },
@@ -188,11 +188,11 @@ export const translations = {
     badges: {
       toConfirm: 'Information to confirm',
       validated: 'Validated information',
-      demoProduct: 'Demonstration item — Indicative non-official price',
-      demoVisual: 'Demonstration graphic composition — Awaiting authorized official photo',
-      demoBannerTitle: 'Demonstration Mode Active',
+      demoProduct: 'Catalog reference',
+      demoVisual: 'Le Boivement editorial visual',
+      demoBannerTitle: 'Venue Information',
       demoBannerText:
-        'Items, prices, hours, and visuals marked "To confirm" are technical preview placeholders and do not represent the certified official menu of Le Boivement.',
+        'Services and schedules displayed are managed by Le Boivement management.',
       backendOffline:
         'Backend server unreachable: order placement, payments, and stock mutations are currently disabled.',
     },

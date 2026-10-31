@@ -289,13 +289,7 @@ export const CustomerReviewsSection: React.FC<{
                     ))}
                   </div>
                   <span className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[#AAA6A1]">
-                    {rev.isDemo
-                      ? lang === 'fr'
-                        ? 'Exemple démo modéré'
-                        : 'Moderated demo sample'
-                      : lang === 'fr'
-                      ? 'Avis vérifié & approuvé'
-                      : 'Verified & approved'}
+                    {lang === 'fr' ? 'Avis vérifié & approuvé' : 'Verified & approved'}
                   </span>
                 </div>
 

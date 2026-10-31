@@ -7,7 +7,6 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  Sparkles,
   Utensils,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -329,11 +328,6 @@ export const HomePage: React.FC = () => {
                       <span className="font-mono-tabular text-base font-semibold text-[#101014]">
                         {formatXaf(defaultVariant?.priceXaf || product.basePriceXaf, lang)}
                       </span>
-                      {product.isDemo && (
-                        <p className="text-[11px] text-[#91652E]">
-                          {lang === 'fr' ? 'Tarif démo à valider' : 'Demo price to confirm'}
-                        </p>
-                      )}
                     </div>
 
                     <div className="flex items-center gap-2">

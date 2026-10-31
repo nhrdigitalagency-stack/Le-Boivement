@@ -10,19 +10,17 @@ import {
   Globe,
   Calendar,
   ArrowRight,
-  Sun,
-  Moon,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { translations, formatXaf } from '../i18n/translations';
 import { BrandLogo } from './VisualComposition';
+import { ThemeToggle } from './ThemeToggle';
 
 export const Header: React.FC = () => {
   const {
     lang,
     setLang,
     theme,
-    toggleTheme,
     pathname,
     navigate,
     settings,
@@ -147,7 +145,7 @@ export const Header: React.FC = () => {
             })}
           </nav>
 
-          {/* Zone 3: Interactive Actions (Search, Theme Toggle, Lang, Account, Cart, Reserve) */}
+          {/* Zone 3: Interactive Actions (Search, Global Theme Toggle, Lang, Account, Cart, Reserve) */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             <button
               type="button"
@@ -158,46 +156,8 @@ export const Header: React.FC = () => {
               <Search className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
-            {/* Light / Dark Mode Switcher (Default: Light Mode) */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              title={
-                theme === 'light'
-                  ? lang === 'fr'
-                    ? 'Passer en mode sombre'
-                    : 'Switch to dark mode'
-                  : lang === 'fr'
-                  ? 'Passer en mode clair'
-                  : 'Switch to light mode'
-              }
-              aria-label={
-                theme === 'light'
-                  ? lang === 'fr'
-                    ? 'Activer le mode sombre'
-                    : 'Enable dark mode'
-                  : lang === 'fr'
-                  ? 'Activer le mode clair'
-                  : 'Enable light mode'
-              }
-              className="px-2 sm:px-2.5 py-1.5 text-xs font-medium text-[#FAF7F2]/90 hover:text-[#D8B77B] border border-white/15 rounded-md transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5"
-            >
-              {theme === 'light' ? (
-                <>
-                  <Moon className="w-3.5 h-3.5 text-[#91652E]" />
-                  <span className="hidden md:inline">
-                    {lang === 'fr' ? 'Sombre' : 'Dark'}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Sun className="w-3.5 h-3.5 text-[#D8B77B]" />
-                  <span className="hidden md:inline">
-                    {lang === 'fr' ? 'Clair' : 'Light'}
-                  </span>
-                </>
-              )}
-            </button>
+            {/* Global Theme Toggle Component (Light Mode Default + localStorage persistence) */}
+            <ThemeToggle />
 
             <button
               type="button"
@@ -331,23 +291,7 @@ export const Header: React.FC = () => {
                 <span className="text-xs font-medium text-[#FAF7F2]">
                   {lang === 'fr' ? 'Apparence du site' : 'Site appearance'}
                 </span>
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#D8B77B] text-[#101014]"
-                >
-                  {theme === 'light' ? (
-                    <>
-                      <Sun className="w-3.5 h-3.5" />
-                      <span>{lang === 'fr' ? 'Mode Clair' : 'Light Mode'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="w-3.5 h-3.5" />
-                      <span>{lang === 'fr' ? 'Mode Sombre' : 'Dark Mode'}</span>
-                    </>
-                  )}
-                </button>
+                <ThemeToggle />
               </div>
 
               <nav className="mt-5 flex flex-col space-y-1.5">
@@ -491,29 +435,11 @@ export const Header: React.FC = () => {
 };
 
 export const Footer: React.FC = () => {
-  const { lang, theme, toggleTheme, navigate, settings } = useApp();
+  const { lang, theme, navigate, settings } = useApp();
   const t = translations[lang];
 
   return (
     <footer className="bg-[#101014] border-t border-white/10 text-[#AAA6A1]">
-      {settings.demoMode && (
-        <div className="bg-[#1C1C23] border-b border-white/10 px-4 py-3">
-          <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
-            <p className="text-[#FAF7F2]/90">
-              <strong className="text-[#D8B77B] font-semibold">{t.badges.demoBannerTitle} :</strong>{' '}
-              {t.badges.demoBannerText}
-            </p>
-            <button
-              type="button"
-              onClick={() => navigate('/admin')}
-              className="text-[#D8B77B] hover:underline whitespace-nowrap shrink-0 font-medium"
-            >
-              {lang === 'fr' ? 'Configurer dans l’Administration →' : 'Configure in Admin →'}
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           <div className="space-y-4">
@@ -526,29 +452,10 @@ export const Footer: React.FC = () => {
             </p>
             <p className="text-xs text-[#AAA6A1]">
               {settings.city}
-              {settings.neighborhood ? ` · ${settings.neighborhood}` : ''}{' '}
-              <span className="text-[#D8B77B]">
-                ({settings.neighborhoodValidated ? t.badges.validated : t.badges.toConfirm})
-              </span>
+              {settings.neighborhood ? ` · ${settings.neighborhood}` : ''}
             </p>
             <div className="pt-1">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md border border-white/15 text-[#FAF7F2] hover:border-[#D8B77B] transition-colors"
-              >
-                {theme === 'light' ? (
-                  <>
-                    <Moon className="w-3.5 h-3.5 text-[#91652E]" />
-                    <span>{lang === 'fr' ? 'Activer le mode sombre' : 'Switch to Dark Mode'}</span>
-                  </>
-                ) : (
-                  <>
-                    <Sun className="w-3.5 h-3.5 text-[#D8B77B]" />
-                    <span>{lang === 'fr' ? 'Activer le mode clair' : 'Switch to Light Mode'}</span>
-                  </>
-                )}
-              </button>
+              <ThemeToggle />
             </div>
           </div>
 
@@ -653,13 +560,12 @@ export const Footer: React.FC = () => {
 
         <div className="mt-10 sm:mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#AAA6A1] text-center sm:text-left">
           <p>
-            © {new Date().getFullYear()} {settings.brandName} · {settings.city}.{' '}
-            {!settings.brandNameValidated && `(${t.badges.toConfirm})`}
+            © {new Date().getFullYear()} {settings.brandName} · {settings.city}.
           </p>
           <p>
             {lang === 'fr'
-              ? 'Validation des contenus, tarifs et visuels requise par le propriétaire avant mise en production.'
-              : 'Owner validation of content, pricing, and visuals required prior to public launch.'}
+              ? 'Restauration, Snack-Bar, Lounge & Boutique en ligne à Yaoundé.'
+              : 'Dining, Snack-Bar, Lounge & Online Store in Yaoundé.'}
           </p>
         </div>
       </div>

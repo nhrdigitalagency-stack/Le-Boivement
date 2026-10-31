@@ -13,6 +13,26 @@ export type { DatabaseState, SanityConnectionStatus };
 
 const DATA_FILE_PATH = path.resolve(process.cwd(), '.boivement-runtime-db.json');
 
+function stripDemoStrings(val: string | undefined): string {
+  if (!val) return '';
+  return val
+    .replace(/^\[DÉMO\]\s*/gi, '')
+    .replace(/^\[DEMO\]\s*/gi, '')
+    .replace(/^\[Composition Démo\]\s*/gi, '')
+    .replace(/^\[Demo Composition\]\s*/gi, '')
+    .replace(/^\[AVIS DÉMO MODÉRÉ\]\s*/gi, '')
+    .replace(/^\[MODERATED DEMO REVIEW\]\s*/gi, '')
+    .replace(/^\[AVIS DÉMO EN ATTENTE\]\s*/gi, '')
+    .replace(/^\[PENDING DEMO REVIEW\]\s*/gi, '')
+    .replace(/\s*\(Exemple de modération\)/gi, '')
+    .replace(/\s*\(Démo\)/gi, '')
+    .replace(/^Article de démonstration\.\s*/gi, '')
+    .replace(/^Demonstration item\.\s*/gi, '')
+    .replace(/Sélection de démonstration — /gi, '')
+    .replace(/Demonstration selection — /gi, '')
+    .trim();
+}
+
 class TransactionalStore {
   private state: DatabaseState;
   private lockPromise: Promise<void> = Promise.resolve();
@@ -27,6 +47,83 @@ class TransactionalStore {
     if (!Array.isArray(data.reviews)) {
       data.reviews = seed.reviews;
     }
+
+    if (data.settings) {
+      data.settings.demoMode = false;
+    }
+
+    if (Array.isArray(data.categories)) {
+      data.categories = data.categories.map((c) => ({
+        ...c,
+        nameFr: stripDemoStrings(c.nameFr),
+        nameEn: stripDemoStrings(c.nameEn),
+        descriptionFr: stripDemoStrings(c.descriptionFr),
+        descriptionEn: stripDemoStrings(c.descriptionEn),
+      }));
+    }
+
+    if (Array.isArray(data.products)) {
+      data.products = data.products.map((p) => ({
+        ...p,
+        nameFr: stripDemoStrings(p.nameFr),
+        nameEn: stripDemoStrings(p.nameEn),
+        descriptionFr: stripDemoStrings(p.descriptionFr),
+        descriptionEn: stripDemoStrings(p.descriptionEn),
+        isDemo: false,
+      }));
+    }
+
+    if (Array.isArray(data.inventory)) {
+      data.inventory = data.inventory.map((i) => ({
+        ...i,
+        designationFr: stripDemoStrings(i.designationFr),
+        designationEn: stripDemoStrings(i.designationEn),
+      }));
+    }
+
+    if (Array.isArray(data.suppliers)) {
+      data.suppliers = data.suppliers.map((s) => ({
+        ...s,
+        name: stripDemoStrings(s.name),
+        notes: stripDemoStrings(s.notes),
+      }));
+    }
+
+    if (Array.isArray(data.events)) {
+      data.events = data.events.map((e) => ({
+        ...e,
+        titleFr: stripDemoStrings(e.titleFr),
+        titleEn: stripDemoStrings(e.titleEn),
+        descriptionFr: stripDemoStrings(e.descriptionFr),
+        descriptionEn: stripDemoStrings(e.descriptionEn),
+      }));
+    }
+
+    if (Array.isArray(data.media)) {
+      data.media = data.media.map((m) => ({
+        ...m,
+        titleFr: stripDemoStrings(m.titleFr),
+        titleEn: stripDemoStrings(m.titleEn),
+        captionFr: stripDemoStrings(m.captionFr),
+        captionEn: stripDemoStrings(m.captionEn),
+        isDemoGraphic: false,
+      }));
+    }
+
+    if (Array.isArray(data.reviews)) {
+      data.reviews = data.reviews
+        .filter((r) => !r.id.includes('pending'))
+        .map((r) => ({
+          ...r,
+          authorName: stripDemoStrings(r.authorName),
+          commentFr: stripDemoStrings(r.commentFr),
+          commentEn: stripDemoStrings(r.commentEn),
+          productNameFr: r.productNameFr ? stripDemoStrings(r.productNameFr) : undefined,
+          productNameEn: r.productNameEn ? stripDemoStrings(r.productNameEn) : undefined,
+          isDemo: false,
+        }));
+    }
+
     return data;
   }
 
@@ -37,6 +134,7 @@ class TransactionalStore {
         this.state = this.ensureStateShape(remote);
         this.recalculateAvailableStocks();
         this.saveToDisk(this.state);
+        await sanityAdapter.pushStateToSanity(this.state);
       } else {
         await sanityAdapter.pushStateToSanity(this.state);
       }
@@ -51,7 +149,9 @@ class TransactionalStore {
         const raw = fs.readFileSync(DATA_FILE_PATH, 'utf-8');
         const parsed = JSON.parse(raw) as DatabaseState;
         if (parsed && parsed.settings && Array.isArray(parsed.inventory)) {
-          return this.ensureStateShape(parsed);
+          const cleaned = this.ensureStateShape(parsed);
+          this.saveToDisk(cleaned);
+          return cleaned;
         }
       }
     } catch (e) {

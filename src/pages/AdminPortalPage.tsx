@@ -10,7 +10,6 @@ import {
   ShoppingBag,
   CreditCard,
   Calendar,
-  Sparkles,
   Image as ImageIcon,
   Users,
   UserCog,
@@ -303,7 +302,7 @@ export const AdminPortalPage: React.FC = () => {
     { id: 'orders', label: t.admin.modules.orders, icon: <ShoppingBag className="w-4 h-4" /> },
     { id: 'payments', label: t.admin.modules.payments, icon: <CreditCard className="w-4 h-4" /> },
     { id: 'reservations', label: t.admin.modules.reservations, icon: <Calendar className="w-4 h-4" /> },
-    { id: 'events', label: t.admin.modules.events, icon: <Sparkles className="w-4 h-4" /> },
+    { id: 'events', label: t.admin.modules.events, icon: <Calendar className="w-4 h-4" /> },
     { id: 'gallery', label: t.admin.modules.gallery, icon: <ImageIcon className="w-4 h-4" /> },
     {
       id: 'reviews',
@@ -1044,15 +1043,6 @@ export const AdminPortalPage: React.FC = () => {
                             />
                             <span>Tarif officiel validé</span>
                           </label>
-                          <label className="inline-flex items-center gap-1.5 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={newProdIsDemo}
-                              onChange={(e) => setNewProdIsDemo(e.target.checked)}
-                              className="accent-[#D8B77B]"
-                            />
-                            <span>Article Démo</span>
-                          </label>
                         </div>
 
                         <div className="sm:col-span-3">
@@ -1117,14 +1107,14 @@ export const AdminPortalPage: React.FC = () => {
                                           p.validationStatus === 'validated'
                                             ? 'to_confirm'
                                             : 'validated',
-                                        isDemo: p.validationStatus === 'validated',
+                                        isDemo: false,
                                       })
                                     }
                                     className="underline text-[#D8B77B]"
                                   >
                                     {p.validationStatus === 'validated'
                                       ? 'Validé (Officiel)'
-                                      : 'À confirmer (Démo)'}
+                                      : 'À confirmer'}
                                   </button>
                                 </td>
                                 <td className="py-3 text-right">
@@ -2443,20 +2433,6 @@ export const AdminPortalPage: React.FC = () => {
 
                       {/* Services toggles */}
                       <div className="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <label className="inline-flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={adminState.settings.demoMode}
-                            onChange={(e) =>
-                              setAdminState({
-                                ...adminState,
-                                settings: { ...adminState.settings, demoMode: e.target.checked },
-                              })
-                            }
-                            className="accent-[#D8B77B]"
-                          />
-                          <span>Bannière Mode Démonstration</span>
-                        </label>
 
                         <label className="inline-flex items-center gap-2 cursor-pointer">
                           <input

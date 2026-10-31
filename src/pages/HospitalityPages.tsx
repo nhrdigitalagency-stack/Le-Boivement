@@ -1050,9 +1050,8 @@ export const LoginPage: React.FC = () => {
               </h2>
             </div>
             <p className="text-xs text-[#AAA6A1]">
-              En mode démonstration, sélectionnez l’un des 5 rôles opérationnels pour tester les
-              permissions réelles appliquées côté serveur et côté interface (aucun mot de passe codé
-              en dur).
+              Sélectionnez l’un des 5 rôles opérationnels pour ouvrir une session authentifiée et
+              vérifier les permissions appliquées côté serveur et côté interface.
             </p>
 
             <div className="space-y-3">

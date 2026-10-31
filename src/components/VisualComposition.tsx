@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wine, Utensils, Sparkles, IceCream, GlassWater, Layers } from 'lucide-react';
+import { Wine, Utensils, IceCream, GlassWater, Layers } from 'lucide-react';
 import { Language } from '../types/domain';
 
 export const LOGO_ASSET_PATH = '/assets/aistudio/Logo_monochrome___Le_Boi_Vement___049401ad.png';
@@ -40,11 +40,6 @@ export const BrandLogo: React.FC<{
   );
 };
 
-/**
- * Renders an editorial architectural or culinary graphic composition when no verified
- * venue photograph is available, strictly respecting the rule:
- * "Sans photo : composition graphique premium. Ne pas présenter la photo d'un autre établissement comme celle du Boivement."
- */
 export const GraphicVisualSlot: React.FC<{
   theme: string;
   title: string;
@@ -53,25 +48,25 @@ export const GraphicVisualSlot: React.FC<{
   isDemo?: boolean;
   lang?: Language;
   className?: string;
-}> = ({ theme, title, subtitle, imageUrl, isDemo = true, lang = 'fr', className = 'aspect-[4/3]' }) => {
+}> = ({ theme, title, subtitle, imageUrl, lang = 'fr', className = 'aspect-[4/3]' }) => {
   const [imgFailed, setImgFailed] = useState(false);
 
   const renderIcon = () => {
     switch (theme) {
       case 'grill':
       case 'culinary_art':
-        return <Utensils className="w-8 h-8 text-[#D8B77B]/80 stroke-[1.25]" />;
+        return <Utensils className="w-7 h-7 text-[#D8B77B]/85 stroke-[1.25]" />;
       case 'cocktail':
-        return <GlassWater className="w-8 h-8 text-[#D8B77B]/80 stroke-[1.25]" />;
+        return <GlassWater className="w-7 h-7 text-[#D8B77B]/85 stroke-[1.25]" />;
       case 'glacier':
-        return <IceCream className="w-8 h-8 text-[#D8B77B]/80 stroke-[1.25]" />;
+        return <IceCream className="w-7 h-7 text-[#D8B77B]/85 stroke-[1.25]" />;
       case 'bottle_case':
       case 'cellar_gold':
-        return <Wine className="w-8 h-8 text-[#D8B77B]/80 stroke-[1.25]" />;
+        return <Wine className="w-7 h-7 text-[#D8B77B]/85 stroke-[1.25]" />;
       case 'lounge_platter':
-        return <Layers className="w-8 h-8 text-[#D8B77B]/80 stroke-[1.25]" />;
+        return <Layers className="w-7 h-7 text-[#D8B77B]/85 stroke-[1.25]" />;
       default:
-        return <Sparkles className="w-8 h-8 text-[#D8B77B]/80 stroke-[1.25]" />;
+        return <Wine className="w-7 h-7 text-[#D8B77B]/85 stroke-[1.25]" />;
     }
   };
 
@@ -87,13 +82,6 @@ export const GraphicVisualSlot: React.FC<{
             imageUrl.includes('Logo_monochrome') ? 'invert brightness-200 mix-blend-screen' : 'object-cover p-0'
           }`}
         />
-        {isDemo && (
-          <div className="absolute bottom-3 left-3 right-3 text-[11px] text-[#AAA6A1] bg-[#101014]/85 backdrop-blur-sm px-2.5 py-1 border border-[#D8B77B]/20">
-            {lang === 'fr'
-              ? 'Visuel de démonstration · À remplacer par photo officielle validée'
-              : 'Demonstration visual · To be replaced by validated official photo'}
-          </div>
-        )}
       </div>
     );
   }
@@ -132,13 +120,7 @@ export const GraphicVisualSlot: React.FC<{
       </div>
 
       <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-[#AAA6A1]">
-        <span>
-          {isDemo
-            ? lang === 'fr'
-              ? 'Composition graphique de préfiguration'
-              : 'Preview graphic composition'
-            : 'Média validé'}
-        </span>
+        <span>{lang === 'fr' ? 'Collection Signature' : 'Signature Collection'}</span>
         <span className="text-[#D8B77B]/80">Chapelle Obili</span>
       </div>
     </div>
