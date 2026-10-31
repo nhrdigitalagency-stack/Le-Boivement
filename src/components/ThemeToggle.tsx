@@ -33,10 +33,10 @@ export const ThemeToggle: React.FC<{ className?: string; showLabel?: boolean }> 
           ? 'Activer le mode clair'
           : 'Enable light mode'
       }
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md border transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#D8B77B] ${
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-md border transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#D8B77B] ${
         isLight
-          ? 'bg-white/90 text-[#101014] border-[#101014]/15 hover:border-[#91652E]'
-          : 'bg-[#1C1C23] text-[#FAF7F2] border-white/15 hover:border-[#D8B77B]'
+          ? 'bg-[#F4ECE0] text-[#1E1915] border-[#91652E]/30 hover:bg-[#EADBC6] hover:border-[#91652E]'
+          : 'bg-[#242029] text-[#FAF7F2] border-[#D8B77B]/35 hover:border-[#D8B77B]'
       } ${className}`}
     >
       {isLight ? (

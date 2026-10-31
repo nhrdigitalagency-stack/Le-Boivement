@@ -3,25 +3,25 @@
 
 @layer base {
   :root {
-    --bg-primary: #FAF7F2;
+    --bg-primary: #FBF8F3;
     --bg-surface: #FFFFFF;
-    --bg-subtle: #F2ECE1;
-    --text-primary: #101014;
-    --text-secondary: #5C564F;
-    --accent-champagne: #D8B77B;
+    --bg-subtle: #F4ECE0;
+    --text-primary: #1E1915;
+    --text-secondary: #655B50;
+    --accent-champagne: #C89D54;
     --accent-copper: #91652E;
-    --border-subtle: rgba(16, 16, 20, 0.12);
+    --border-subtle: rgba(145, 101, 46, 0.16);
   }
 
   html.dark {
-    --bg-primary: #101014;
-    --bg-surface: #1C1C23;
-    --bg-subtle: #14141A;
+    --bg-primary: #141216;
+    --bg-surface: #1E1B22;
+    --bg-subtle: #18151C;
     --text-primary: #FAF7F2;
-    --text-secondary: #AAA6A1;
+    --text-secondary: #B5AEA6;
     --accent-champagne: #D8B77B;
-    --accent-copper: #91652E;
-    --border-subtle: rgba(255, 255, 255, 0.10);
+    --accent-copper: #B88648;
+    --border-subtle: rgba(216, 183, 123, 0.16);
   }
 
   html {
@@ -43,29 +43,30 @@
 }
 
 /* ============================================================================
-   ADAPTIVE LIGHT MODE ENGINE (Default = Light Mode)
-   Automatically harmonizes dark-palette utility classes when html is in Light Mode
-   while preserving dark mode fidelity when html.dark is active.
+   WARM & LUMINOUS LIGHT MODE ENGINE (Default = Light Mode)
+   Replaces dark charcoal/black surfaces with warm ivory, alabaster, pearl white,
+   champagne gold, and warm bronze/copper accents.
    ============================================================================ */
 html:not(.dark) body {
-  background-color: #FAF7F2;
-  color: #101014;
+  background-color: #FBF8F3;
+  color: #1E1915;
 }
 
 html:not(.dark) :where(.bg-\[\#101014\]:not(.keep-dark)) {
-  background-color: #FAF7F2 !important;
+  background-color: #FBF8F3 !important;
 }
 
 html:not(.dark) :where(.bg-\[\#101014\]\/95:not(.keep-dark)),
 html:not(.dark) :where(.bg-\[\#101014\]\/90:not(.keep-dark)),
 html:not(.dark) :where(.bg-\[\#101014\]\/80:not(.keep-dark)) {
-  background-color: rgba(250, 247, 242, 0.95) !important;
+  background-color: rgba(251, 248, 243, 0.96) !important;
 }
 
 html:not(.dark) :where(.bg-\[\#14141A\]:not(.keep-dark)),
+html:not(.dark) :where(.bg-\[\#16161C\]:not(.keep-dark)),
 html:not(.dark) :where(.bg-\[\#16161D\]:not(.keep-dark)),
 html:not(.dark) :where(.bg-\[\#17171E\]:not(.keep-dark)) {
-  background-color: #F3EDE2 !important;
+  background-color: #F4ECE0 !important;
 }
 
 html:not(.dark) :where(.bg-\[\#1C1C23\]:not(.keep-dark)),
@@ -76,7 +77,7 @@ html:not(.dark) :where(.bg-\[\#1C1C23\]\/60:not(.keep-dark)),
 html:not(.dark) :where(.bg-\[\#1C1C23\]\/50:not(.keep-dark)),
 html:not(.dark) :where(.bg-\[\#1C1C23\]\/40:not(.keep-dark)) {
   background-color: #FFFFFF !important;
-  box-shadow: 0 2px 12px rgba(16, 16, 20, 0.04);
+  box-shadow: 0 4px 20px rgba(145, 101, 46, 0.06);
 }
 
 html:not(.dark) :where(.text-\[\#FAF7F2\]:not(.keep-light-text)),
@@ -84,48 +85,33 @@ html:not(.dark) :where(.text-\[\#FAF7F2\]\/90:not(.keep-light-text)),
 html:not(.dark) :where(.text-\[\#FAF7F2\]\/85:not(.keep-light-text)),
 html:not(.dark) :where(.text-\[\#FAF7F2\]\/80:not(.keep-light-text)),
 html:not(.dark) :where(.text-white:not(.keep-light-text)) {
-  color: #101014 !important;
+  color: #1E1915 !important;
 }
 
 html:not(.dark) :where(.text-\[\#AAA6A1\]:not(.keep-light-text)) {
-  color: #5C564F !important;
+  color: #655B50 !important;
 }
 
-/* Ensure champagne text remains high-contrast copper-gold on light surfaces */
+/* Warm Copper-Gold accent on light backgrounds */
 html:not(.dark) :where(.text-\[\#D8B77B\]:not(.keep-light-text)) {
-  color: #8C5E24 !important;
+  color: #91652E !important;
 }
 
 html:not(.dark) :where(.border-white\/5),
 html:not(.dark) :where(.border-white\/10),
 html:not(.dark) :where(.border-white\/15),
 html:not(.dark) :where(.border-white\/20) {
-  border-color: rgba(16, 16, 20, 0.12) !important;
+  border-color: rgba(145, 101, 46, 0.16) !important;
 }
 
 html:not(.dark) :where(.divide-white\/5) > :not([hidden]) ~ :not([hidden]),
 html:not(.dark) :where(.divide-white\/10) > :not([hidden]) ~ :not([hidden]) {
-  border-color: rgba(16, 16, 20, 0.10) !important;
+  border-color: rgba(145, 101, 46, 0.14) !important;
 }
 
 html:not(.dark) :where(.bg-white\/5:not(.keep-dark)),
 html:not(.dark) :where(.bg-white\/10:not(.keep-dark)) {
-  background-color: rgba(16, 16, 20, 0.05) !important;
-}
-
-/* Preserve light text inside intentional dark art compositions (.keep-dark) */
-html:not(.dark) .keep-dark,
-html:not(.dark) .keep-dark .text-\[\#FAF7F2\],
-html:not(.dark) .keep-dark .text-white {
-  color: #FAF7F2 !important;
-}
-
-html:not(.dark) .keep-dark .text-\[\#AAA6A1\] {
-  color: #C8C3BC !important;
-}
-
-html:not(.dark) .keep-dark .text-\[\#D8B77B\] {
-  color: #D8B77B !important;
+  background-color: rgba(145, 101, 46, 0.07) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -148,12 +134,12 @@ html:not(.dark) .keep-dark .text-\[\#D8B77B\] {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #C5B9A5;
+  background: #D5C4AC;
   border-radius: 4px;
 }
 html.dark ::-webkit-scrollbar-thumb {
-  background: #2C2C36;
+  background: #322D38;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D8B77B;
+  background: #91652E;
 }

@@ -32,20 +32,10 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const t = translations[lang];
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [quickQuery, setQuickQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 36);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -64,8 +54,8 @@ export const Header: React.FC = () => {
     }
   }, [searchModalOpen]);
 
-  const isHeroTransparent = pathname === '/' && !scrolled && !mobileMenuOpen;
-  const logoVariant = theme === 'light' && !isHeroTransparent ? 'dark-on-light' : 'light-on-dark';
+  const isLight = theme === 'light';
+  const logoVariant = isLight ? 'dark-on-light' : 'light-on-dark';
 
   const navItems = [
     { href: '/', label: t.nav.home },
@@ -99,12 +89,10 @@ export const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
-          isHeroTransparent
-            ? 'keep-dark bg-gradient-to-b from-[#101014]/90 via-[#101014]/60 to-transparent border-b border-white/10'
-            : theme === 'light'
-            ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#101014]/10 shadow-sm'
-            : 'bg-[#101014]/95 backdrop-blur-md border-b border-white/10 shadow-lg'
+        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 backdrop-blur-md ${
+          isLight
+            ? 'bg-[#FBF8F3]/95 border-b border-[#91652E]/20 shadow-[0_2px_16px_rgba(145,101,46,0.08)]'
+            : 'bg-[#161419]/95 border-b border-[#D8B77B]/20 shadow-lg'
         }`}
       >
         <div className="max-w-[1380px] mx-auto px-3 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-2 sm:gap-5">
@@ -121,7 +109,7 @@ export const Header: React.FC = () => {
           {/* Zone 2: Primary Navigation Links */}
           <nav
             aria-label="Navigation principale"
-            className="hidden lg:flex items-center gap-5 xl:gap-6 text-sm font-medium text-[#FAF7F2]/85"
+            className="hidden lg:flex items-center gap-5 xl:gap-6 text-sm font-medium"
           >
             {navItems.map((item) => {
               const active =
@@ -133,10 +121,14 @@ export const Header: React.FC = () => {
                   key={item.href}
                   type="button"
                   onClick={() => navigate(item.href)}
-                  className={`py-1 whitespace-nowrap shrink-0 transition-colors border-b-2 ${
+                  className={`py-1.5 whitespace-nowrap shrink-0 transition-colors border-b-2 ${
                     active
-                      ? 'text-[#D8B77B] border-[#D8B77B] font-semibold'
-                      : 'border-transparent hover:text-[#FAF7F2] hover:border-current/30'
+                      ? isLight
+                        ? 'text-[#91652E] border-[#91652E] font-semibold'
+                        : 'text-[#D8B77B] border-[#D8B77B] font-semibold'
+                      : isLight
+                      ? 'text-[#1E1915] border-transparent hover:text-[#91652E] hover:border-[#91652E]/40'
+                      : 'text-[#FAF7F2]/90 border-transparent hover:text-[#D8B77B] hover:border-[#D8B77B]/40'
                   }`}
                 >
                   {item.label}
@@ -150,7 +142,11 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setSearchModalOpen(true)}
-              className="p-2 sm:p-2.5 text-[#FAF7F2]/85 hover:text-[#D8B77B] transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-[#D8B77B]"
+              className={`p-2 sm:p-2.5 transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-[#D8B77B] ${
+                isLight
+                  ? 'text-[#1E1915] hover:bg-[#F4ECE0] hover:text-[#91652E]'
+                  : 'text-[#FAF7F2] hover:bg-white/10 hover:text-[#D8B77B]'
+              }`}
               aria-label={t.nav.searchPlaceholder}
             >
               <Search className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -162,10 +158,14 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
-              className="px-2 sm:px-2.5 py-1.5 text-xs font-medium text-[#FAF7F2]/90 hover:text-[#D8B77B] border border-white/15 rounded-md transition-colors whitespace-nowrap shrink-0 flex items-center gap-1"
+              className={`px-2.5 py-1.5 text-xs font-semibold border rounded-md transition-colors whitespace-nowrap shrink-0 flex items-center gap-1 ${
+                isLight
+                  ? 'bg-[#F4ECE0] text-[#1E1915] border-[#91652E]/30 hover:bg-[#EADBC6]'
+                  : 'bg-[#242029] text-[#FAF7F2] border-[#D8B77B]/30 hover:border-[#D8B77B]'
+              }`}
               aria-label="Changer de langue / Switch language"
             >
-              <Globe className="w-3.5 h-3.5 text-[#D8B77B]" />
+              <Globe className={`w-3.5 h-3.5 ${isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'}`} />
               <span>{lang.toUpperCase()}</span>
             </button>
 
@@ -174,7 +174,11 @@ export const Header: React.FC = () => {
               onClick={() =>
                 navigate(authUser?.type === 'staff' ? '/admin' : authUser ? '/mon-compte' : '/connexion')
               }
-              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-2 text-xs font-medium text-[#FAF7F2]/85 hover:text-[#D8B77B] transition-colors whitespace-nowrap shrink-0"
+              className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-2 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 ${
+                isLight
+                  ? 'text-[#1E1915] hover:bg-[#F4ECE0] hover:text-[#91652E]'
+                  : 'text-[#FAF7F2] hover:bg-white/10 hover:text-[#D8B77B]'
+              }`}
               aria-label={t.nav.account}
             >
               <User className="w-4 h-4" />
@@ -186,12 +190,16 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/panier')}
-              className="relative p-2 sm:p-2.5 text-[#FAF7F2] hover:text-[#D8B77B] transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-[#D8B77B]"
+              className={`relative p-2 sm:p-2.5 transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-[#D8B77B] ${
+                isLight
+                  ? 'text-[#1E1915] hover:bg-[#F4ECE0] hover:text-[#91652E]'
+                  : 'text-[#FAF7F2] hover:bg-white/10 hover:text-[#D8B77B]'
+              }`}
               aria-label={`${t.nav.cart} (${cartCount})`}
             >
               <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               {cartCount > 0 && (
-                <span className="keep-light-text absolute -top-0.5 -right-0.5 min-w-[19px] h-5 px-1 bg-[#D8B77B] text-[#101014] font-mono-tabular text-[11px] font-semibold rounded-full flex items-center justify-center">
+                <span className="keep-light-text absolute -top-0.5 -right-0.5 min-w-[19px] h-5 px-1 bg-[#91652E] text-white font-mono-tabular text-[11px] font-semibold rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -201,7 +209,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/reservation')}
-                className="hidden md:inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold bg-[#D8B77B] text-[#101014] hover:bg-[#e3c68f] transition-colors rounded-md whitespace-nowrap shrink-0"
+                className="keep-light-text hidden md:inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold bg-[#91652E] text-white hover:bg-[#7A5324] transition-colors rounded-md shadow-sm whitespace-nowrap shrink-0"
               >
                 <Calendar className="w-3.5 h-3.5" />
                 <span>{t.nav.reserve}</span>
@@ -211,9 +219,13 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/admin')}
-              className="hidden xl:inline-flex items-center gap-1 px-3 py-2 text-xs font-medium text-[#AAA6A1] hover:text-[#FAF7F2] border border-white/10 rounded-md transition-colors whitespace-nowrap shrink-0"
+              className={`hidden xl:inline-flex items-center gap-1 px-3 py-2 text-xs font-medium border rounded-md transition-colors whitespace-nowrap shrink-0 ${
+                isLight
+                  ? 'bg-[#F4ECE0] text-[#1E1915] border-[#91652E]/25 hover:border-[#91652E]'
+                  : 'bg-[#242029] text-[#FAF7F2] border-[#D8B77B]/25 hover:border-[#D8B77B]'
+              }`}
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#D8B77B]" />
+              <ShieldCheck className={`w-3.5 h-3.5 ${isLight ? 'text-[#91652E]' : 'text-[#D8B77B]'}`} />
               <span>{t.nav.admin}</span>
             </button>
 
@@ -221,7 +233,9 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen((v) => !v)}
-              className="lg:hidden p-2 text-[#FAF7F2] hover:text-[#D8B77B] rounded-lg focus-visible:outline-2 focus-visible:outline-[#D8B77B]"
+              className={`lg:hidden p-2 rounded-lg focus-visible:outline-2 focus-visible:outline-[#D8B77B] ${
+                isLight ? 'text-[#1E1915] hover:bg-[#F4ECE0]' : 'text-[#FAF7F2] hover:bg-white/10'
+              }`}
               aria-expanded={mobileMenuOpen}
               aria-label="Menu principal"
             >
@@ -263,7 +277,7 @@ export const Header: React.FC = () => {
       {/* Accessible Mobile Navigation Panel */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 lg:hidden bg-black/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 lg:hidden bg-black/50 backdrop-blur-sm"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
@@ -273,13 +287,13 @@ export const Header: React.FC = () => {
             <div>
               <div className="flex items-center justify-between pb-5 border-b border-white/10">
                 <BrandLogo
-                  variant={theme === 'light' ? 'dark-on-light' : 'light-on-dark'}
+                  variant={isLight ? 'dark-on-light' : 'light-on-dark'}
                   className="h-9"
                 />
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 text-[#AAA6A1] hover:text-white"
+                  className="p-2 text-[#AAA6A1] hover:text-[#FAF7F2]"
                   aria-label="Fermer le menu"
                 >
                   <X className="w-5 h-5" />
@@ -323,7 +337,7 @@ export const Header: React.FC = () => {
                     setMobileMenuOpen(false);
                     navigate('/reservation');
                   }}
-                  className="w-full py-2.5 px-4 bg-[#D8B77B] text-[#101014] font-semibold text-sm rounded-md"
+                  className="keep-light-text w-full py-2.5 px-4 bg-[#91652E] text-white font-semibold text-sm rounded-md"
                 >
                   {t.nav.reserve}
                 </button>
@@ -358,7 +372,7 @@ export const Header: React.FC = () => {
       {/* Search Modal (Closes on Escape) */}
       {searchModalOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-start justify-center pt-20 sm:pt-24 px-4"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-20 sm:pt-24 px-4"
           onClick={() => setSearchModalOpen(false)}
         >
           <div
@@ -439,7 +453,7 @@ export const Footer: React.FC = () => {
   const t = translations[lang];
 
   return (
-    <footer className="bg-[#101014] border-t border-white/10 text-[#AAA6A1]">
+    <footer className="bg-[#16161C] border-t border-white/10 text-[#AAA6A1]">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           <div className="space-y-4">

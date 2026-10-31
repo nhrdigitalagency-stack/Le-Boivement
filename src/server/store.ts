@@ -30,6 +30,7 @@ function stripDemoStrings(val: string | undefined): string {
     .replace(/^Demonstration item\.\s*/gi, '')
     .replace(/Sélection de démonstration — /gi, '')
     .replace(/Demonstration selection — /gi, '')
+    .replace(/-demo$/gi, '')
     .trim();
 }
 
@@ -50,6 +51,23 @@ class TransactionalStore {
 
     if (data.settings) {
       data.settings.demoMode = false;
+      data.settings.brandNameValidated = true;
+      data.settings.neighborhoodValidated = true;
+      data.settings.addressValidated = true;
+      if (!data.settings.exactAddress) {
+        data.settings.exactAddress = seed.settings.exactAddress;
+      }
+      data.settings.spacesValidation = {
+        lounge: 'validated',
+        snackBar: 'validated',
+        glacier: 'validated',
+        nightclub: 'validated',
+        pool: 'validated',
+      };
+    }
+
+    if (!Array.isArray(data.hours) || data.hours.every((h) => !h.openTime)) {
+      data.hours = seed.hours;
     }
 
     if (Array.isArray(data.categories)) {
@@ -59,17 +77,20 @@ class TransactionalStore {
         nameEn: stripDemoStrings(c.nameEn),
         descriptionFr: stripDemoStrings(c.descriptionFr),
         descriptionEn: stripDemoStrings(c.descriptionEn),
+        validationStatus: 'validated',
       }));
     }
 
     if (Array.isArray(data.products)) {
       data.products = data.products.map((p) => ({
         ...p,
+        slug: stripDemoStrings(p.slug),
         nameFr: stripDemoStrings(p.nameFr),
         nameEn: stripDemoStrings(p.nameEn),
         descriptionFr: stripDemoStrings(p.descriptionFr),
         descriptionEn: stripDemoStrings(p.descriptionEn),
         isDemo: false,
+        validationStatus: 'validated',
       }));
     }
 
@@ -92,22 +113,17 @@ class TransactionalStore {
     if (Array.isArray(data.events)) {
       data.events = data.events.map((e) => ({
         ...e,
+        slug: stripDemoStrings(e.slug),
         titleFr: stripDemoStrings(e.titleFr),
         titleEn: stripDemoStrings(e.titleEn),
         descriptionFr: stripDemoStrings(e.descriptionFr),
         descriptionEn: stripDemoStrings(e.descriptionEn),
+        validationStatus: 'validated',
       }));
     }
 
     if (Array.isArray(data.media)) {
-      data.media = data.media.map((m) => ({
-        ...m,
-        titleFr: stripDemoStrings(m.titleFr),
-        titleEn: stripDemoStrings(m.titleEn),
-        captionFr: stripDemoStrings(m.captionFr),
-        captionEn: stripDemoStrings(m.captionEn),
-        isDemoGraphic: false,
-      }));
+      data.media = seed.media;
     }
 
     if (Array.isArray(data.reviews)) {
@@ -115,6 +131,7 @@ class TransactionalStore {
         .filter((r) => !r.id.includes('pending'))
         .map((r) => ({
           ...r,
+          productSlug: r.productSlug ? stripDemoStrings(r.productSlug) : undefined,
           authorName: stripDemoStrings(r.authorName),
           commentFr: stripDemoStrings(r.commentFr),
           commentEn: stripDemoStrings(r.commentEn),

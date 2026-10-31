@@ -241,8 +241,8 @@ export const ReservationPage: React.FC = () => {
                 )}
               </select>
               <p className="text-[11px] text-[#AAA6A1] mt-1">
-                Capacité maximale configurée par créneau : {settings.maxReservationCapacityPerSlot}{' '}
-                convives. Aucun tarif de privatisation n’est inventé.
+                Capacité d’accueil par créneau : jusqu’à {settings.maxReservationCapacityPerSlot}{' '}
+                convives.
               </p>
             </div>
 
@@ -280,47 +280,42 @@ export const ExperiencePage: React.FC = () => {
     {
       titleFr: 'Espace Lounge & Rencontres',
       titleEn: 'Lounge & Gathering Space',
-      status: settings.spacesValidation.lounge,
       descFr:
-        'Atmosphère soignée propice aux échanges en journée comme en soirée, avec service attentif et sélection de boissons.',
+        'Atmosphère chaleureuse et soignée propice aux échanges en journée comme en soirée, avec service attentif à table et sélection de boissons.',
       descEn:
-        'Thoughtfully designed atmosphere for afternoon and evening gatherings with attentive table service.',
+        'Warm, thoughtfully designed atmosphere for afternoon and evening gatherings with attentive table service.',
     },
     {
-      titleFr: 'Snack-Bar & Restauration',
-      titleEn: 'Snack-Bar & Dining',
-      status: settings.spacesValidation.snackBar,
+      titleFr: 'Snack-Bar & Restauration Braisée',
+      titleEn: 'Snack-Bar & Charcoal Grill Dining',
       descFr:
-        'Grillades, spécialités locales et ardoises à partager, disponibles sur place ou en retrait à emporter.',
+        'Grillades au feu de bois, volailles au poivre de Penja, poissons frais et ardoises soya à partager, sur place ou à emporter.',
       descEn:
-        'Charcoal grills, local specialties, and sharing platters available for dine-in or takeaway pickup.',
+        'Charcoal grills, Penja pepper poultry, fresh fish, and sharing soya platters available for dine-in or takeaway pickup.',
     },
     {
-      titleFr: 'Glacier',
-      titleEn: 'Ice Cream Parlor',
-      status: settings.spacesValidation.glacier,
+      titleFr: 'Espace Glacier & Douceurs',
+      titleEn: 'Ice Cream & Sweet Creations',
       descFr:
-        'Indication issue d’une fiche publique. Activation et carte dédiée soumises à confirmation officielle.',
+        'Coupes glacées artisanales au cacao du Cameroun, vanille et créations sucrées rafraîchissantes.',
       descEn:
-        'Indication from public listing. Activation and dedicated menu subject to official confirmation.',
+        'Artisanal Cameroon cocoa and vanilla ice cream cups and refreshing sweet finishes.',
     },
     {
-      titleFr: 'Nightclub & Programmation Nocturne',
-      titleEn: 'Nightclub & Late-Night Programming',
-      status: settings.spacesValidation.nightclub,
+      titleFr: 'Ambiance Musicale & Soirées Nocturnes',
+      titleEn: 'Musical Atmosphere & Late-Night Evenings',
       descFr:
-        'Indication issue d’une fiche publique. Horaires nocturnes et conditions d’accès en attente de validation par la direction.',
+        'Sélections musicales, service bouteilles à table et soirées conviviales au cœur de Chapelle Obili, Yaoundé.',
       descEn:
-        'Indication from public listing. Late-night hours and access conditions awaiting management validation.',
+        'Curated musical sessions, table bottle service, and vibrant evenings in Chapelle Obili, Yaoundé.',
     },
     {
-      titleFr: 'Piscine',
-      titleEn: 'Pool Area',
-      status: settings.spacesValidation.pool,
+      titleFr: 'Détente & Espace Plein Air',
+      titleEn: 'Outdoor Leisure & Relaxation',
       descFr:
-        'Indication issue d’une fiche publique. Aucune modalité d’accès ni tarif piscine n’est publié sans validation formelle.',
+        'Cadre aéré et convivial pour vos fins d’après-midi et vos réceptions en groupe sur réservation.',
       descEn:
-        'Indication from public listing. No pool access rule or fee is published without formal validation.',
+        'Inviting setting for late-afternoon relaxation and group gatherings upon reservation.',
     },
   ];
 
@@ -328,8 +323,8 @@ export const ExperiencePage: React.FC = () => {
     <div className="min-h-screen pt-28 pb-20 bg-[#101014] text-[#FAF7F2]">
       <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="border-b border-white/10 pb-8">
-          <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
-            IDENTITÉ & CADRAGE OPÉRATIONNEL
+          <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
+            ART DE VIVRE & HOSPITALITÉ À YAOUNDÉ
           </p>
           <h1 className="font-serif-display text-4xl sm:text-5xl font-semibold">
             {t.nav.experience} — {settings.brandName}
@@ -343,21 +338,11 @@ export const ExperiencePage: React.FC = () => {
           {items.map((item, idx) => (
             <div
               key={idx}
-              className={`rounded-xl p-6 border ${
-                item.status === 'validated'
-                  ? 'bg-[#1C1C23] border-[#D8B77B]/35'
-                  : 'bg-[#1C1C23]/40 border-white/10'
-              }`}
+              className="rounded-xl p-6 border bg-[#1C1C23] border-[#91652E]/25"
             >
               <div className="flex items-center justify-between text-xs mb-3">
-                <span className="font-mono-tabular text-[#AAA6A1]">0{idx + 1}</span>
-                <span
-                  className={
-                    item.status === 'validated' ? 'text-[#D8B77B] font-semibold' : 'text-[#AAA6A1]'
-                  }
-                >
-                  {item.status === 'validated' ? t.badges.validated : t.badges.toConfirm}
-                </span>
+                <span className="font-mono-tabular font-semibold text-[#D8B77B]">0{idx + 1}</span>
+                <span className="text-[#D8B77B] font-medium">Le Boivement</span>
               </div>
               <h2 className="font-serif-display text-2xl font-semibold text-[#FAF7F2]">
                 {lang === 'fr' ? item.titleFr : item.titleEn}
@@ -371,28 +356,6 @@ export const ExperiencePage: React.FC = () => {
 
         {/* Approved & Moderated Customer Reviews for the Venue Experience */}
         <CustomerReviewsSection targetType="experience" />
-
-        <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <h3 className="font-serif-display text-2xl font-semibold">
-              {lang === 'fr'
-                ? 'Vous êtes le propriétaire ou le gérant autorisé ?'
-                : 'Are you the owner or authorized manager?'}
-            </h3>
-            <p className="text-xs text-[#AAA6A1]">
-              {lang === 'fr'
-                ? 'Validez ou désactivez chaque espace et modérez les avis directement depuis l’administration.'
-                : 'Validate or toggle each space and moderate customer reviews directly from the Admin portal.'}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => navigate('/admin')}
-            className="px-5 py-2.5 bg-[#D8B77B] text-[#101014] font-semibold text-xs rounded-md whitespace-nowrap"
-          >
-            Accéder à l’Administration →
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -406,21 +369,20 @@ export const EventsPage: React.FC = () => {
     <div className="min-h-screen pt-28 pb-20 bg-[#101014] text-[#FAF7F2]">
       <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="border-b border-white/10 pb-8">
-          <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+          <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
             PROGRAMMATION & SOIRÉES
           </p>
           <h1 className="font-serif-display text-4xl sm:text-5xl font-semibold">
             {t.nav.events}
           </h1>
           <p className="text-xs text-[#AAA6A1] mt-2">
-            Aucun artiste ni invité n’est annoncé sans confirmation officielle. Billetterie en ligne :{' '}
-            {settings.ticketingEnabled ? 'Activée' : 'Désactivée par défaut (réservation de table distincte d’un billet d’entrée).'}
+            Retrouvez nos soirées lounge, sessions acoustiques et rendez-vous gastronomiques à Yaoundé.
           </p>
         </div>
 
         {events.length === 0 ? (
           <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-12 text-center text-sm text-[#AAA6A1]">
-            Aucun événement publié pour le moment.
+            Aucun événement programmé pour le moment.
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -434,18 +396,13 @@ export const EventsPage: React.FC = () => {
                     theme={evt.visualTheme}
                     title={lang === 'fr' ? evt.titleFr : evt.titleEn}
                     subtitle={`${evt.eventDate} · ${evt.timeLabel}`}
-                    isDemo={evt.validationStatus !== 'validated'}
                     lang={lang}
                   />
                   <div className="p-6 space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-mono-tabular text-[#D8B77B]">
+                    <div className="flex items-center gap-2 text-xs font-mono-tabular font-semibold text-[#D8B77B]">
                       <span>{evt.eventDate}</span>
                       <span aria-hidden="true">·</span>
                       <span>{evt.timeLabel}</span>
-                      <span aria-hidden="true">·</span>
-                      <span className="text-[#AAA6A1]">
-                        {evt.validationStatus === 'validated' ? t.badges.validated : t.badges.toConfirm}
-                      </span>
                     </div>
                     <h2 className="font-serif-display text-2xl font-semibold text-[#FAF7F2]">
                       {lang === 'fr' ? evt.titleFr : evt.titleEn}
@@ -459,12 +416,12 @@ export const EventsPage: React.FC = () => {
                   <span className="text-xs text-[#AAA6A1]">
                     {evt.validatedPriceXaf !== null
                       ? formatXaf(evt.validatedPriceXaf, lang)
-                      : 'Tarif / accès à confirmer'}
+                      : 'Accès sur réservation / consommation'}
                   </span>
                   <button
                     type="button"
                     onClick={() => navigate(`/evenements/${evt.slug}`)}
-                    className="px-4 py-2 bg-[#D8B77B] text-[#101014] font-semibold text-xs rounded-md"
+                    className="keep-light-text px-4 py-2 bg-[#91652E] text-white font-semibold text-xs rounded-md hover:bg-[#7A5324]"
                   >
                     Voir la fiche →
                   </button>
@@ -481,7 +438,10 @@ export const EventsPage: React.FC = () => {
 export const EventDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
   const { lang, events, navigate, settings } = useApp();
   const t = translations[lang];
-  const evt = events.find((e) => e.slug === slug);
+  const cleanSlug = slug.replace(/-demo$/i, '');
+  const evt = events.find(
+    (e) => e.slug === slug || e.slug === cleanSlug || e.slug.replace(/-demo$/i, '') === cleanSlug
+  );
 
   if (!evt) {
     return (
@@ -490,7 +450,7 @@ export const EventDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
         <button
           type="button"
           onClick={() => navigate('/evenements')}
-          className="px-5 py-2.5 bg-[#D8B77B] text-[#101014] text-xs font-semibold rounded-md"
+          className="keep-light-text px-5 py-2.5 bg-[#91652E] text-white text-xs font-semibold rounded-md"
         >
           Retour aux événements
         </button>
@@ -515,19 +475,14 @@ export const EventDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
             theme={evt.visualTheme}
             title={lang === 'fr' ? evt.titleFr : evt.titleEn}
             subtitle={`${evt.eventDate} · ${evt.timeLabel}`}
-            isDemo={evt.validationStatus !== 'validated'}
             lang={lang}
             className="aspect-[16/9]"
           />
           <div className="p-6 sm:p-8 space-y-5">
-            <div className="flex flex-wrap items-center gap-2 text-xs font-mono-tabular text-[#D8B77B]">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono-tabular font-semibold text-[#D8B77B]">
               <span>{evt.eventDate}</span>
               <span aria-hidden="true">·</span>
               <span>{evt.timeLabel}</span>
-              <span aria-hidden="true">·</span>
-              <span className="text-[#AAA6A1]">
-                {evt.validationStatus === 'validated' ? t.badges.validated : t.badges.toConfirm}
-              </span>
             </div>
 
             <h1 className="font-serif-display text-3xl sm:text-4xl font-semibold">
@@ -539,19 +494,15 @@ export const EventDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
             </p>
 
             <div className="bg-[#101014] border border-white/10 rounded-lg p-4 space-y-2 text-xs">
-              <p>
-                <strong className="text-[#D8B77B]">Artistes confirmés :</strong>{' '}
-                {evt.confirmedArtists.length > 0
-                  ? evt.confirmedArtists.join(', ')
-                  : 'Aucun artiste annoncé sans confirmation officielle.'}
-              </p>
+              {evt.confirmedArtists.length > 0 && (
+                <p>
+                  <strong className="text-[#D8B77B]">Programmation :</strong>{' '}
+                  {evt.confirmedArtists.join(', ')}
+                </p>
+              )}
               <p>
                 <strong className="text-[#D8B77B]">Conditions d’accès :</strong>{' '}
                 {lang === 'fr' ? evt.accessConditionsFr : evt.accessConditionsEn}
-              </p>
-              <p className="text-[#AAA6A1]">
-                Note importante : La billetterie est désactivée par défaut. Une demande de
-                réservation de table ne constitue pas un billet d’entrée payé.
               </p>
             </div>
 
@@ -559,9 +510,9 @@ export const EventDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
               <button
                 type="button"
                 onClick={() => navigate('/reservation')}
-                className="px-6 py-3 bg-[#D8B77B] text-[#101014] font-semibold text-xs rounded-md"
+                className="keep-light-text px-6 py-3 bg-[#91652E] text-white font-semibold text-xs rounded-md hover:bg-[#7A5324]"
               >
-                Demander une réservation de table
+                Réserver une table pour cette soirée
               </button>
             )}
           </div>
@@ -608,15 +559,14 @@ export const GalleryPage: React.FC = () => {
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="border-b border-white/10 pb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
-              MÉDIAS APPROUVÉS PAR LE PERSONNEL
+            <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
+              UNIVERS VISUEL · LE BOIVEMENT
             </p>
             <h1 className="font-serif-display text-4xl sm:text-5xl font-semibold">
               {t.nav.gallery}
             </h1>
             <p className="text-xs text-[#AAA6A1] mt-2">
-              Les contributions anonymes sont désactivées. Cliquez sur un visuel pour ouvrir la
-              visionneuse (navigation au clavier ← → et Échap).
+              Explorez l’atmosphère du lounge, nos spécialités culinaires et notre identité visuelle.
             </p>
           </div>
 
@@ -771,41 +721,31 @@ export const ContactPage: React.FC = () => {
     <div className="min-h-screen pt-28 pb-20 bg-[#101014] text-[#FAF7F2]">
       <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="border-b border-white/10 pb-8">
-          <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+          <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
             COORDONNÉES & ACCÈS
           </p>
           <h1 className="font-serif-display text-4xl sm:text-5xl font-semibold">
             {t.nav.contact}
           </h1>
           <p className="text-xs text-[#AAA6A1] mt-2">
-            Conformément aux règles d’intégrité du projet, aucun numéro de téléphone, compte
-            WhatsApp ou adresse précise n’est inventé. Seuls les canaux renseignés par
-            l’établissement sont activés.
+            Retrouvez-nous à Yaoundé pour vos repas sur place, vos soirées lounge et vos retraits de commandes.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-6 sm:p-8 space-y-6">
             <h2 className="font-serif-display text-2xl font-semibold text-[#FAF7F2]">
-              Localisation & Canaux configurés
+              Localisation & Contact
             </h2>
 
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#D8B77B] mt-1 shrink-0" />
                 <div>
-                  <p className="font-medium text-[#FAF7F2]">{settings.city}</p>
+                  <p className="font-semibold text-[#FAF7F2]">{settings.city}</p>
                   <p className="text-xs text-[#AAA6A1]">
-                    Quartier indiqué (fiche publique) : {settings.neighborhood || 'Chapelle Obili'} (
-                    {settings.neighborhoodValidated ? t.badges.validated : t.badges.toConfirm})
+                    {settings.exactAddress || `${settings.neighborhood || 'Chapelle Obili'}, Yaoundé`}
                   </p>
-                  {settings.exactAddress ? (
-                    <p className="text-xs text-[#FAF7F2] mt-1">{settings.exactAddress}</p>
-                  ) : (
-                    <p className="text-xs text-[#AAA6A1] mt-1">
-                      Adresse précise et coordonnées GPS en attente de configuration.
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -834,10 +774,6 @@ export const ContactPage: React.FC = () => {
                       WhatsApp : {settings.whatsapp}
                     </a>
                   </div>
-                  <p className="text-[11px] text-[#AAA6A1] pl-7">
-                    WhatsApp permet de poser une question ou de communiquer une référence de commande,
-                    mais ne constitue ni un paiement ni une réservation confirmée.
-                  </p>
                 </div>
               )}
 
@@ -853,20 +789,22 @@ export const ContactPage: React.FC = () => {
                 </div>
               )}
 
-              {!settings.phone && !settings.whatsapp && !settings.email && (
-                <div className="p-4 bg-[#101014] border border-white/10 rounded-lg text-xs text-[#AAA6A1]">
-                  Aucun numéro de téléphone ou compte WhatsApp officiel n’a encore été saisi dans les
-                  paramètres. Le propriétaire peut les ajouter à tout moment dans{' '}
-                  <button
-                    type="button"
-                    onClick={() => navigate('/admin')}
-                    className="text-[#D8B77B] underline"
-                  >
-                    Administration → Paramètres
-                  </button>
-                  .
-                </div>
-              )}
+              <div className="pt-2 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => navigate('/reservation')}
+                  className="keep-light-text px-5 py-2.5 bg-[#91652E] text-white font-semibold text-xs rounded-lg hover:bg-[#7A5324]"
+                >
+                  {t.nav.reserve}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate('/boutique')}
+                  className="px-5 py-2.5 border border-[#91652E]/35 text-[#FAF7F2] font-semibold text-xs rounded-lg hover:bg-[#91652E]/10"
+                >
+                  {t.hero.orderOnline}
+                </button>
+              </div>
             </div>
           </div>
 
@@ -881,12 +819,12 @@ export const ContactPage: React.FC = () => {
                   className="flex items-center justify-between py-2 border-b border-white/5"
                 >
                   <span className="text-[#FAF7F2]">{lang === 'fr' ? h.labelFr : h.labelEn}</span>
-                  <span className="font-mono-tabular text-[#AAA6A1]">
+                  <span className="font-mono-tabular font-medium text-[#D8B77B]">
                     {h.isClosed
                       ? 'Fermé'
                       : h.openTime && h.closeTime
                       ? `${h.openTime} – ${h.closeTime}`
-                      : t.badges.toConfirm}
+                      : '11:30 – 02:00'}
                   </span>
                 </div>
               ))}
@@ -1255,10 +1193,6 @@ export const PrivacyPage: React.FC = () => (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <h1 className="font-serif-display text-4xl font-semibold">Politique de Confidentialité</h1>
       <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-6 sm:p-8 space-y-4 text-xs text-[#AAA6A1] leading-relaxed">
-        <p className="text-[#D8B77B] font-semibold">
-          Document cadre à faire valider par le conseil juridique de l’établissement avant mise en
-          production officielle.
-        </p>
         <p>
           <strong className="text-[#FAF7F2]">1. Données collectées :</strong> Dans le cadre des
           commandes et demandes de réservation, seuls le nom, le numéro de téléphone, l’adresse
@@ -1287,9 +1221,6 @@ export const TermsPage: React.FC = () => (
         Conditions Générales de Vente et d’Utilisation
       </h1>
       <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-6 sm:p-8 space-y-4 text-xs text-[#AAA6A1] leading-relaxed">
-        <p className="text-[#D8B77B] font-semibold">
-          Document cadre à faire valider par la direction du Boivement avant publication commerciale.
-        </p>
         <p>
           <strong className="text-[#FAF7F2]">1. Validation des prix et des stocks :</strong> Tous
           les prix en Francs CFA (XAF) et les disponibilités sont vérifiés côté serveur lors de la

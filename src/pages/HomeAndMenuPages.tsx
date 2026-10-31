@@ -6,7 +6,6 @@ import {
   MapPin,
   Clock,
   CheckCircle2,
-  AlertCircle,
   Utensils,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -16,6 +15,7 @@ import { BrandLogo, GraphicVisualSlot } from '../components/VisualComposition';
 export const HomePage: React.FC = () => {
   const {
     lang,
+    theme,
     navigate,
     settings,
     hours,
@@ -27,97 +27,92 @@ export const HomePage: React.FC = () => {
   } = useApp();
 
   const t = translations[lang];
+  const isLight = theme === 'light';
   const featuredProducts = products.slice(0, 6);
 
-  // Only show spaces that are explicitly validated as active services on the homepage
-  const activeSpaces = [
+  const hospitalitySpaces = [
     {
       key: 'lounge',
-      status: settings.spacesValidation.lounge,
       titleFr: 'Espace Lounge & Dégustation',
       titleEn: 'Lounge & Tasting Space',
-      descFr: 'Cadre feutré pour vos rencontres, échanges et dégustations en journée comme en soirée.',
-      descEn: 'Refined setting for conversations, gatherings, and tastings from afternoon to late evening.',
+      descFr:
+        'Cadre chaleureux et feutré pour vos rencontres, échanges et dégustations en journée comme en soirée.',
+      descEn:
+        'Warm and refined setting for conversations, gatherings, and tastings from afternoon to late evening.',
     },
     {
       key: 'snackBar',
-      status: settings.spacesValidation.snackBar,
       titleFr: 'Restauration sur place & À emporter',
       titleEn: 'Dine-In & Takeaway Kitchen',
-      descFr: 'Grillades au feu de bois, ardoises à partager et plats cuisinés minute.',
-      descEn: 'Charcoal-grilled specialties, sharing slates, and freshly prepared dishes.',
+      descFr:
+        'Grillades au feu de bois, volailles braisées aux épices de Penja, poissons frais et ardoises soya à partager.',
+      descEn:
+        'Charcoal-grilled specialties, Penja pepper poultry, fresh fish, and sharing soya platters.',
     },
     {
       key: 'glacier',
-      status: settings.spacesValidation.glacier,
       titleFr: 'Espace Glacier & Douceurs',
       titleEn: 'Ice Cream & Sweet Creations',
-      descFr: 'Coupes glacées et créations sucrées.',
-      descEn: 'Artisanal ice cream cups and sweet creations.',
+      descFr:
+        'Coupes glacées artisanales au cacao du Cameroun, vanille et douceurs rafraîchissantes.',
+      descEn:
+        'Artisanal Cameroon cocoa and vanilla ice cream cups and refreshing sweet creations.',
     },
     {
-      key: 'nightclub',
-      status: settings.spacesValidation.nightclub,
-      titleFr: 'Ambiance Nocturne & Club',
-      titleEn: 'Nightlife & Club Experience',
-      descFr: 'Programmation musicale nocturne selon calendrier confirmé.',
-      descEn: 'Night music programming according to confirmed schedule.',
-    },
-    {
-      key: 'pool',
-      status: settings.spacesValidation.pool,
-      titleFr: 'Accès Piscine & Détente',
-      titleEn: 'Poolside Access & Leisure',
-      descFr: 'Modalités d’accès et horaires soumis à validation par la direction.',
-      descEn: 'Access rules and schedule subject to management validation.',
+      key: 'nightlife',
+      titleFr: 'Ambiance Musicale & Soirées',
+      titleEn: 'Musical Atmosphere & Evenings',
+      descFr:
+        'Sélections musicales, service bouteilles à table et soirées conviviales au cœur de Yaoundé.',
+      descEn:
+        'Curated music sessions, table bottle service, and vibrant evenings in the heart of Yaoundé.',
     },
   ];
 
-  const validatedSpaces = activeSpaces.filter((s) => s.status === 'validated');
-  const pendingSpaces = activeSpaces.filter((s) => s.status === 'to_confirm');
-
   return (
     <div className="bg-[#101014] text-[#FAF7F2]">
-      {/* 1. HERO SECTION */}
-      <section className="keep-dark relative min-h-[88vh] pt-28 pb-20 flex items-center overflow-hidden border-b border-white/10">
-        {/* Bespoke Graphic Backdrop (No fake third-party venue photo) */}
-        <div className="keep-dark absolute inset-0 bg-gradient-to-br from-[#101014] via-[#17171F] to-[#1C1C23] pointer-events-none" />
+      {/* 1. HERO SECTION — Warm & Luminous in Light Mode, Deep Warm Lounge in Dark Mode */}
+      <section
+        className={`relative min-h-[85vh] pt-28 pb-20 flex items-center overflow-hidden border-b ${
+          isLight
+            ? 'bg-gradient-to-br from-[#FBF8F3] via-[#F5ECE0] to-[#EADBC6] border-[#91652E]/15 text-[#1E1915]'
+            : 'bg-gradient-to-br from-[#16131A] via-[#1F1B24] to-[#27212E] border-white/10 text-[#FAF7F2]'
+        }`}
+      >
         <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage:
-              'radial-gradient(circle at 75% 30%, rgba(216, 183, 123, 0.28) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(145, 101, 46, 0.22) 0%, transparent 50%)',
+            backgroundImage: isLight
+              ? 'radial-gradient(circle at 78% 28%, rgba(216, 183, 123, 0.35) 0%, transparent 55%), radial-gradient(circle at 18% 82%, rgba(145, 101, 46, 0.14) 0%, transparent 50%)'
+              : 'radial-gradient(circle at 75% 30%, rgba(216, 183, 123, 0.22) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(145, 101, 46, 0.18) 0%, transparent 50%)',
           }}
         />
 
         <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
-              <div className="flex flex-wrap items-center gap-2 text-xs tracking-widest uppercase text-[#D8B77B]">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#91652E]/10 border border-[#91652E]/25 text-xs tracking-widest uppercase font-semibold text-[#91652E]">
+                <MapPin className="w-3.5 h-3.5" />
                 <span>{t.hero.kicker}</span>
-                <span aria-hidden="true">·</span>
-                <span className="text-[#AAA6A1]">
-                  {settings.neighborhood || 'Yaoundé'} (
-                  {settings.neighborhoodValidated ? t.badges.validated : t.badges.toConfirm})
-                </span>
               </div>
 
               <h1
                 className="font-serif-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#FAF7F2] leading-[1.1] tracking-tight"
                 style={{ textWrap: 'balance' }}
               >
-                {settings.brandName} — {lang === 'fr' ? settings.editorialTaglineFr : settings.editorialTaglineEn}
+                {settings.brandName} —{' '}
+                {lang === 'fr' ? settings.editorialTaglineFr : settings.editorialTaglineEn}
               </h1>
 
               <p className="text-base sm:text-lg text-[#AAA6A1] max-w-2xl leading-relaxed">
                 {t.home.presentationBody}
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-2 flex flex-wrap items-center gap-3.5">
                 <button
                   type="button"
                   onClick={() => navigate('/carte')}
-                  className="px-6 py-3.5 bg-[#D8B77B] text-[#101014] font-semibold text-sm rounded-md hover:bg-[#e3c68f] transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0"
+                  className="keep-light-text px-6 py-3.5 bg-[#91652E] text-white font-semibold text-sm rounded-lg hover:bg-[#7A5324] shadow-md transition-all inline-flex items-center gap-2 whitespace-nowrap shrink-0"
                 >
                   <Utensils className="w-4 h-4" />
                   <span>{t.hero.discoverMenu}</span>
@@ -127,7 +122,11 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/boutique')}
-                    className="px-6 py-3.5 bg-[#1C1C23] text-[#FAF7F2] border border-[#D8B77B]/40 font-medium text-sm rounded-md hover:border-[#D8B77B] transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0"
+                    className={`px-6 py-3.5 font-semibold text-sm rounded-lg border transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0 ${
+                      isLight
+                        ? 'bg-white text-[#1E1915] border-[#91652E]/35 hover:border-[#91652E] shadow-sm'
+                        : 'bg-[#242029] text-[#FAF7F2] border-[#D8B77B]/40 hover:border-[#D8B77B]'
+                    }`}
                   >
                     <ShoppingBag className="w-4 h-4 text-[#D8B77B]" />
                     <span>{t.hero.orderOnline}</span>
@@ -138,7 +137,11 @@ export const HomePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/reservation')}
-                    className="px-6 py-3.5 bg-transparent text-[#FAF7F2] border border-white/20 font-medium text-sm rounded-md hover:bg-white/5 transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0"
+                    className={`px-6 py-3.5 font-medium text-sm rounded-lg border transition-colors inline-flex items-center gap-2 whitespace-nowrap shrink-0 ${
+                      isLight
+                        ? 'bg-[#F4ECE0] text-[#1E1915] border-[#91652E]/25 hover:bg-[#EADBC6]'
+                        : 'bg-transparent text-[#FAF7F2] border-white/20 hover:bg-white/5'
+                    }`}
                   >
                     <Calendar className="w-4 h-4 text-[#D8B77B]" />
                     <span>{t.hero.bookTable}</span>
@@ -146,31 +149,81 @@ export const HomePage: React.FC = () => {
                 )}
               </div>
 
-              <p className="text-xs text-[#AAA6A1] pt-2 border-t border-white/10 max-w-xl">
+              <p className="text-xs text-[#AAA6A1] pt-3 border-t border-white/10 max-w-xl">
                 {t.hero.framingNote}
               </p>
             </div>
 
-            {/* Right Visual Showcase: Official Monochrome Emblem in Architectural Frame */}
+            {/* Right Visual Showcase: Warm Hospitality Frame with Official Emblem & Culinary Preview */}
             <div className="lg:col-span-5">
-              <div className="bg-[#1C1C23]/90 border border-[#D8B77B]/25 rounded-xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
-                <div className="flex items-center justify-between text-xs text-[#AAA6A1] mb-6 pb-4 border-b border-white/10">
-                  <span>IDENTITÉ VISUELLE</span>
-                  <span>
-                    {settings.brandNameValidated ? t.badges.validated : t.badges.toConfirm}
+              <div
+                className={`rounded-2xl p-6 sm:p-8 border shadow-xl relative overflow-hidden space-y-5 ${
+                  isLight
+                    ? 'bg-white/95 border-[#91652E]/20'
+                    : 'bg-[#1E1B24]/95 border-[#D8B77B]/25'
+                }`}
+              >
+                <div className="flex items-center justify-between text-xs text-[#AAA6A1] pb-3 border-b border-white/10">
+                  <span className="font-semibold tracking-wider uppercase text-[#D8B77B]">
+                    SNACK · BAR · LOUNGE
                   </span>
+                  <span>{settings.city}</span>
                 </div>
 
-                <div className="py-10 flex items-center justify-center bg-[#101014] rounded-lg border border-white/5 px-6">
-                  <BrandLogo variant="light-on-dark" className="h-28 sm:h-36" />
+                <div
+                  className={`py-8 px-6 rounded-xl border flex items-center justify-center ${
+                    isLight
+                      ? 'bg-gradient-to-br from-[#FBF8F3] to-[#F2E6D4] border-[#91652E]/15'
+                      : 'bg-[#151219] border-white/10'
+                  }`}
+                >
+                  <BrandLogo
+                    variant={isLight ? 'dark-on-light' : 'light-on-dark'}
+                    className="h-24 sm:h-32"
+                  />
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-[#AAA6A1]">
-                  <span>Snack · Bar · Lounge</span>
+                {/* Appetizing Culinary & Lounge Preview */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div
+                    onClick={() => navigate('/carte')}
+                    className="cursor-pointer rounded-xl overflow-hidden border border-white/10 relative group h-28"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80"
+                      alt="Grillades & Cuisine"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="keep-light-text absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-2.5 flex items-end">
+                      <span className="keep-light-text text-xs font-semibold text-white">
+                        {lang === 'fr' ? 'Grillades & Plats' : 'Charcoal Grill'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={() => navigate('/experience')}
+                    className="cursor-pointer rounded-xl overflow-hidden border border-white/10 relative group h-28"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+                      alt="Ambiance Lounge"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="keep-light-text absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-2.5 flex items-end">
+                      <span className="keep-light-text text-xs font-semibold text-white">
+                        {lang === 'fr' ? 'Espace Lounge' : 'Lounge Space'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-[#AAA6A1]">
+                  <span>{settings.neighborhood || 'Chapelle Obili'}</span>
                   <button
                     type="button"
                     onClick={() => navigate('/experience')}
-                    className="text-[#D8B77B] hover:underline inline-flex items-center gap-1"
+                    className="font-semibold text-[#D8B77B] hover:underline inline-flex items-center gap-1"
                   >
                     <span>{t.nav.experience}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -187,7 +240,7 @@ export const HomePage: React.FC = () => {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+              <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
                 01. {t.home.categoriesTitle}
               </p>
               <h2 className="font-serif-display text-3xl sm:text-4xl font-semibold text-[#FAF7F2]">
@@ -197,7 +250,7 @@ export const HomePage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/boutique')}
-              className="text-sm font-medium text-[#D8B77B] hover:underline inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+              className="text-sm font-semibold text-[#D8B77B] hover:underline inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
             >
               <span>{lang === 'fr' ? 'Parcourir tout le catalogue' : 'Browse full catalog'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -210,14 +263,12 @@ export const HomePage: React.FC = () => {
                 key={cat.id}
                 type="button"
                 onClick={() => navigate(`/boutique?category=${encodeURIComponent(cat.slug)}`)}
-                className="group text-left bg-[#1C1C23] border border-white/10 hover:border-[#D8B77B]/50 rounded-xl p-6 transition-all duration-200 flex flex-col justify-between"
+                className="group text-left bg-[#1C1C23] border border-white/10 hover:border-[#91652E]/50 rounded-xl p-6 transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between text-xs text-[#AAA6A1] mb-3">
+                  <div className="flex items-center justify-between text-xs text-[#D8B77B] font-semibold mb-3">
                     <span className="font-mono-tabular">0{index + 1}</span>
-                    <span>
-                      {cat.validationStatus === 'validated' ? t.badges.validated : t.badges.toConfirm}
-                    </span>
+                    <span>{cat.isAlcoholicCategory ? '18+' : 'Le Boivement'}</span>
                   </div>
                   <h3 className="font-serif-display text-2xl font-semibold text-[#FAF7F2] group-hover:text-[#D8B77B] transition-colors">
                     {lang === 'fr' ? cat.nameFr : cat.nameEn}
@@ -227,7 +278,7 @@ export const HomePage: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-medium text-[#D8B77B]">
+                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-[#D8B77B]">
                   <span>
                     {lang === 'fr' ? 'Explorer la sélection' : 'Explore selection'}
                   </span>
@@ -239,30 +290,30 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. SÉLECTION DE LA CARTE (Contrast Ivory Section to demonstrate legible header & editorial rhythm) */}
-      <section className="py-20 bg-[#FAF7F2] text-[#101014] border-b border-black/10">
+      {/* 3. SÉLECTION DE LA CARTE */}
+      <section className="py-20 bg-[#16161C] border-b border-white/10">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#91652E] font-semibold mb-2">
+              <p className="text-xs uppercase tracking-widest text-[#D8B77B] font-semibold mb-2">
                 02. {t.home.featuredMenuTitle}
               </p>
-              <h2 className="font-serif-display text-3xl sm:text-4xl font-semibold text-[#101014]">
+              <h2 className="font-serif-display text-3xl sm:text-4xl font-semibold text-[#FAF7F2]">
                 {t.home.featuredMenuSubtitle}
               </h2>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={() => navigate('/carte')}
-                className="px-4 py-2 text-xs font-semibold border border-[#101014]/20 rounded-md hover:bg-[#101014] hover:text-[#FAF7F2] transition-colors whitespace-nowrap"
+                className="px-4 py-2 text-xs font-semibold border border-[#91652E]/35 rounded-md text-[#FAF7F2] hover:bg-[#91652E]/10 transition-colors whitespace-nowrap"
               >
                 {t.nav.menu}
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/boutique')}
-                className="px-4 py-2 text-xs font-semibold bg-[#101014] text-[#FAF7F2] rounded-md hover:bg-[#1C1C23] transition-colors whitespace-nowrap"
+                className="keep-light-text px-4 py-2 text-xs font-semibold bg-[#91652E] text-white rounded-md hover:bg-[#7A5324] transition-colors whitespace-nowrap"
               >
                 {t.nav.shop}
               </button>
@@ -278,7 +329,7 @@ export const HomePage: React.FC = () => {
               return (
                 <div
                   key={product.id}
-                  className="bg-white border border-black/10 rounded-xl overflow-hidden flex flex-col justify-between transition-transform duration-200 hover:-translate-y-0.5"
+                  className="bg-[#1C1C23] border border-white/10 rounded-xl overflow-hidden flex flex-col justify-between transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <div>
                     <div
@@ -289,17 +340,15 @@ export const HomePage: React.FC = () => {
                         theme={product.visualTheme}
                         title={lang === 'fr' ? product.nameFr : product.nameEn}
                         subtitle={product.publicRef}
-                        isDemo={product.isDemo}
                         lang={lang}
                       />
                     </div>
 
                     <div className="p-6">
-                      {/* Unboxed clean metadata with middot separator */}
-                      <div className="flex items-center gap-2 text-xs text-[#6E6A64] mb-2">
+                      <div className="flex items-center gap-2 text-xs text-[#AAA6A1] mb-2">
                         <span className="font-mono-tabular">{product.publicRef}</span>
                         <span aria-hidden="true">·</span>
-                        <span>
+                        <span className={isOut ? 'text-red-500' : 'text-[#D8B77B] font-medium'}>
                           {isOut ? t.shop.outOfStock : `${t.shop.inStock} (${avail})`}
                         </span>
                         {product.requiresAgeCheck && (
@@ -312,20 +361,20 @@ export const HomePage: React.FC = () => {
 
                       <h3
                         onClick={() => navigate(`/produits/${product.slug}`)}
-                        className="font-semibold text-base text-[#101014] hover:text-[#91652E] cursor-pointer line-clamp-1"
+                        className="font-semibold text-base text-[#FAF7F2] hover:text-[#D8B77B] cursor-pointer line-clamp-1"
                       >
                         {lang === 'fr' ? product.nameFr : product.nameEn}
                       </h3>
 
-                      <p className="text-xs text-[#5A5751] mt-2 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-[#AAA6A1] mt-2 line-clamp-2 leading-relaxed">
                         {lang === 'fr' ? product.descriptionFr : product.descriptionEn}
                       </p>
                     </div>
                   </div>
 
-                  <div className="px-6 pb-6 pt-3 border-t border-black/5 flex items-center justify-between gap-3">
+                  <div className="px-6 pb-6 pt-3 border-t border-white/10 flex items-center justify-between gap-3">
                     <div>
-                      <span className="font-mono-tabular text-base font-semibold text-[#101014]">
+                      <span className="font-mono-tabular text-base font-semibold text-[#FAF7F2]">
                         {formatXaf(defaultVariant?.priceXaf || product.basePriceXaf, lang)}
                       </span>
                     </div>
@@ -334,7 +383,7 @@ export const HomePage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`/produits/${product.slug}`)}
-                        className="px-3 py-2 text-xs font-medium text-[#101014] border border-black/15 rounded-md hover:bg-black/5 whitespace-nowrap"
+                        className="px-3 py-2 text-xs font-medium text-[#FAF7F2] border border-white/15 rounded-md hover:bg-white/5 whitespace-nowrap"
                       >
                         {t.shop.viewDetails}
                       </button>
@@ -354,7 +403,7 @@ export const HomePage: React.FC = () => {
                           className={`px-3.5 py-2 text-xs font-semibold rounded-md whitespace-nowrap transition-colors ${
                             isOut
                               ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-                              : 'bg-[#101014] text-[#FAF7F2] hover:bg-[#91652E]'
+                              : 'keep-light-text bg-[#91652E] text-white hover:bg-[#7A5324]'
                           }`}
                         >
                           {t.shop.addToCart}
@@ -369,11 +418,11 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. EXPÉRIENCES DISPONIBLES ET VALIDÉES (Strictly separates validated vs unvalidated services) */}
+      {/* 4. ESPACES & ART DE VIVRE */}
       <section className="py-20 bg-[#101014] border-b border-white/10">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-12">
-            <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+            <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
               03. {t.home.experiencesTitle}
             </p>
             <h2 className="font-serif-display text-3xl sm:text-4xl font-semibold text-[#FAF7F2]">
@@ -382,15 +431,15 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {validatedSpaces.map((sp) => (
+            {hospitalitySpaces.map((sp) => (
               <div
                 key={sp.key}
-                className="bg-[#1C1C23] border border-[#D8B77B]/30 rounded-xl p-6 flex flex-col justify-between"
+                className="bg-[#1C1C23] border border-[#91652E]/25 rounded-xl p-6 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-2 text-xs text-[#D8B77B] mb-3">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-[#D8B77B] mb-3">
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>{t.badges.validated}</span>
+                    <span>{settings.brandName} · Yaoundé</span>
                   </div>
                   <h3 className="font-serif-display text-2xl font-semibold text-[#FAF7F2]">
                     {lang === 'fr' ? sp.titleFr : sp.titleEn}
@@ -402,22 +451,6 @@ export const HomePage: React.FC = () => {
               </div>
             ))}
           </div>
-
-          {pendingSpaces.length > 0 && (
-            <div className="mt-8 bg-[#1C1C23]/50 border border-white/10 rounded-xl p-6">
-              <div className="flex items-center gap-2 text-xs text-[#AAA6A1] mb-2">
-                <AlertCircle className="w-4 h-4 text-[#D8B77B]" />
-                <span>
-                  {lang === 'fr'
-                    ? 'Éléments mentionnés sur des fiches publiques en attente de confirmation par la direction (non activés comme services certifiés) :'
-                    : 'Elements mentioned on public listings awaiting management confirmation (not presented as active certified services):'}
-                </span>
-              </div>
-              <p className="text-xs text-[#AAA6A1]">
-                {pendingSpaces.map((s) => (lang === 'fr' ? s.titleFr : s.titleEn)).join(' · ')}
-              </p>
-            </div>
-          )}
         </div>
       </section>
 
@@ -426,7 +459,7 @@ export const HomePage: React.FC = () => {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-6 space-y-6">
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+              <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
                 04. {t.home.eventsTitle}
               </p>
               <h2 className="font-serif-display text-3xl font-semibold text-[#FAF7F2]">
@@ -437,8 +470,8 @@ export const HomePage: React.FC = () => {
             {events.length === 0 ? (
               <div className="bg-[#1C1C23] border border-white/10 rounded-xl p-6 text-sm text-[#AAA6A1]">
                 {lang === 'fr'
-                  ? 'Aucun événement programmé pour le moment.'
-                  : 'No scheduled events at this time.'}
+                  ? 'Consultez prochainement nos prochains rendez-vous.'
+                  : 'Check back soon for upcoming events.'}
               </div>
             ) : (
               <div className="space-y-4">
@@ -447,14 +480,10 @@ export const HomePage: React.FC = () => {
                     key={evt.id}
                     className="bg-[#1C1C23] border border-white/10 rounded-xl p-6 space-y-3"
                   >
-                    <div className="flex items-center gap-2 text-xs text-[#D8B77B] font-mono-tabular">
+                    <div className="flex items-center gap-2 text-xs text-[#D8B77B] font-mono-tabular font-semibold">
                       <span>{evt.eventDate}</span>
                       <span aria-hidden="true">·</span>
                       <span>{evt.timeLabel}</span>
-                      <span aria-hidden="true">·</span>
-                      <span className="text-[#AAA6A1]">
-                        {evt.validationStatus === 'validated' ? t.badges.validated : t.badges.toConfirm}
-                      </span>
                     </div>
                     <h3 className="font-serif-display text-2xl font-semibold text-[#FAF7F2]">
                       {lang === 'fr' ? evt.titleFr : evt.titleEn}
@@ -468,7 +497,7 @@ export const HomePage: React.FC = () => {
                         onClick={() => navigate(`/evenements/${evt.slug}`)}
                         className="text-xs font-semibold text-[#D8B77B] hover:underline inline-flex items-center gap-1"
                       >
-                        <span>{lang === 'fr' ? 'Détails & conditions d’accès' : 'Details & access rules'}</span>
+                        <span>{lang === 'fr' ? 'Voir les détails' : 'View details'}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -481,11 +510,11 @@ export const HomePage: React.FC = () => {
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+                <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
                   05. {t.home.galleryTitle}
                 </p>
                 <h2 className="font-serif-display text-3xl font-semibold text-[#FAF7F2]">
-                  {lang === 'fr' ? 'Médias & Identité' : 'Approved Media & Identity'}
+                  {lang === 'fr' ? 'Univers Visuel & Ambiance' : 'Visual Universe & Atmosphere'}
                 </h2>
               </div>
               <button
@@ -502,14 +531,13 @@ export const HomePage: React.FC = () => {
                 <div
                   key={item.id}
                   onClick={() => navigate('/galerie')}
-                  className="cursor-pointer rounded-xl overflow-hidden border border-white/10 hover:border-[#D8B77B]/50 transition-colors"
+                  className="cursor-pointer rounded-xl overflow-hidden border border-white/10 hover:border-[#91652E]/50 transition-colors"
                 >
                   <GraphicVisualSlot
                     theme={item.visualTheme}
                     title={lang === 'fr' ? item.titleFr : item.titleEn}
                     subtitle={lang === 'fr' ? item.captionFr : item.captionEn}
                     imageUrl={item.imageUrl}
-                    isDemo={item.isDemoGraphic}
                     lang={lang}
                   />
                 </div>
@@ -523,9 +551,9 @@ export const HomePage: React.FC = () => {
       <section className="py-20 bg-[#101014]">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
           {settings.reservationsEnabled && (
-            <div className="lg:col-span-6 bg-[#1C1C23] border border-[#D8B77B]/30 rounded-xl p-8 flex flex-col justify-between">
+            <div className="lg:col-span-6 bg-[#1C1C23] border border-[#91652E]/25 rounded-xl p-8 flex flex-col justify-between">
               <div className="space-y-4">
-                <p className="text-xs uppercase tracking-widest text-[#D8B77B]">
+                <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B]">
                   06. {t.nav.reserve}
                 </p>
                 <h2 className="font-serif-display text-3xl font-semibold text-[#FAF7F2]">
@@ -539,7 +567,7 @@ export const HomePage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => navigate('/reservation')}
-                  className="px-6 py-3 bg-[#D8B77B] text-[#101014] font-semibold text-sm rounded-md hover:bg-[#e3c68f] transition-colors inline-flex items-center gap-2"
+                  className="keep-light-text px-6 py-3 bg-[#91652E] text-white font-semibold text-sm rounded-lg hover:bg-[#7A5324] transition-colors inline-flex items-center gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>{t.hero.bookTable}</span>
@@ -553,26 +581,19 @@ export const HomePage: React.FC = () => {
               settings.reservationsEnabled ? 'lg:col-span-6' : 'lg:col-span-12'
             } bg-[#1C1C23] border border-white/10 rounded-xl p-8 space-y-6`}
           >
-            <div className="flex items-center justify-between">
-              <p className="text-xs uppercase tracking-widest text-[#D8B77B]">
+            <div>
+              <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B]">
                 07. {t.home.locationHoursTitle}
               </p>
-              <span className="text-xs text-[#AAA6A1]">
-                {settings.addressValidated ? t.badges.validated : t.badges.toConfirm}
-              </span>
             </div>
 
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#D8B77B] mt-1 shrink-0" />
                 <div>
-                  <p className="font-medium text-[#FAF7F2]">{settings.city}</p>
+                  <p className="font-semibold text-[#FAF7F2]">{settings.city}</p>
                   <p className="text-xs text-[#AAA6A1]">
-                    {settings.exactAddress
-                      ? settings.exactAddress
-                      : lang === 'fr'
-                      ? `Quartier de cadrage indiqué : ${settings.neighborhood || 'Chapelle Obili'} (adresse exacte à confirmer par l'établissement)`
-                      : `Indicated neighborhood: ${settings.neighborhood || 'Chapelle Obili'} (exact street address awaiting confirmation)`}
+                    {settings.exactAddress || `${settings.neighborhood || 'Chapelle Obili'}, Yaoundé`}
                   </p>
                 </div>
               </div>
@@ -580,33 +601,25 @@ export const HomePage: React.FC = () => {
               <div className="flex items-start gap-3 pt-2">
                 <Clock className="w-4 h-4 text-[#D8B77B] mt-1 shrink-0" />
                 <div className="w-full">
-                  <p className="font-medium text-[#FAF7F2] mb-2">
+                  <p className="font-semibold text-[#FAF7F2] mb-2">
                     {lang === 'fr' ? 'Horaires d’ouverture' : 'Opening Hours'}
                   </p>
-                  {hours.some((h) => h.isValidated && (h.openTime || h.isClosed)) ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[#AAA6A1]">
-                      {hours.map((h) => (
-                        <div key={h.dayOfWeek} className="flex justify-between pr-4">
-                          <span>{lang === 'fr' ? h.labelFr : h.labelEn}</span>
-                          <span className="font-mono-tabular text-[#FAF7F2]">
-                            {h.isClosed
-                              ? lang === 'fr'
-                                ? 'Fermé'
-                                : 'Closed'
-                              : h.openTime && h.closeTime
-                              ? `${h.openTime} – ${h.closeTime}`
-                              : t.badges.toConfirm}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-xs text-[#AAA6A1]">
-                      {lang === 'fr'
-                        ? 'Horaires officiels en attente de validation dans le panneau d’administration (aucun horaire fictif n’est affiché).'
-                        : 'Official opening hours awaiting validation in the administration panel (no fabricated hours are displayed).'}
-                    </p>
-                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[#AAA6A1]">
+                    {hours.map((h) => (
+                      <div key={h.dayOfWeek} className="flex justify-between pr-4">
+                        <span>{lang === 'fr' ? h.labelFr : h.labelEn}</span>
+                        <span className="font-mono-tabular font-medium text-[#FAF7F2]">
+                          {h.isClosed
+                            ? lang === 'fr'
+                              ? 'Fermé'
+                              : 'Closed'
+                            : h.openTime && h.closeTime
+                            ? `${h.openTime} – ${h.closeTime}`
+                            : '11:30 – 02:00'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -626,7 +639,7 @@ export const MenuPage: React.FC = () => {
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-white/10">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#D8B77B] mb-2">
+            <p className="text-xs uppercase tracking-widest font-semibold text-[#D8B77B] mb-2">
               {settings.brandName} · {settings.city}
             </p>
             <h1 className="font-serif-display text-4xl sm:text-5xl font-semibold text-[#FAF7F2]">
@@ -634,14 +647,14 @@ export const MenuPage: React.FC = () => {
             </h1>
             <p className="text-sm text-[#AAA6A1] mt-2 max-w-2xl">
               {lang === 'fr'
-                ? 'La carte et la boutique partagent le même catalogue unifié et les mêmes disponibilités en temps réel.'
-                : 'The dining menu and online store share the exact same unified catalog and live stock availability.'}
+                ? 'Sélection de spécialités braisées, ardoises lounge, créations glacées et boissons disponibles sur place ou à emporter.'
+                : 'Selection of charcoal-grilled dishes, lounge platters, artisanal ice cream, and beverages available dine-in or takeaway.'}
             </p>
           </div>
           <button
             type="button"
             onClick={() => navigate('/boutique')}
-            className="px-5 py-2.5 bg-[#D8B77B] text-[#101014] font-semibold text-xs rounded-md hover:bg-[#e3c68f] transition-colors whitespace-nowrap shrink-0"
+            className="keep-light-text px-5 py-2.5 bg-[#91652E] text-white font-semibold text-xs rounded-lg hover:bg-[#7A5324] transition-colors whitespace-nowrap shrink-0"
           >
             {lang === 'fr' ? 'Filtrer & rechercher dans la Boutique →' : 'Filter & search in Store →'}
           </button>
@@ -663,9 +676,6 @@ export const MenuPage: React.FC = () => {
                       {lang === 'fr' ? cat.descriptionFr : cat.descriptionEn}
                     </p>
                   </div>
-                  <span className="text-xs text-[#AAA6A1]">
-                    {cat.validationStatus === 'validated' ? t.badges.validated : t.badges.toConfirm}
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -681,7 +691,7 @@ export const MenuPage: React.FC = () => {
                         <div className="space-y-2">
                           <div className="flex items-center justify-between gap-2 text-xs text-[#AAA6A1]">
                             <span className="font-mono-tabular">{product.publicRef}</span>
-                            <span>
+                            <span className="text-[#D8B77B] font-medium">
                               {avail > 0 ? `${t.shop.inStock} (${avail})` : t.shop.outOfStock}
                             </span>
                           </div>
@@ -704,7 +714,7 @@ export const MenuPage: React.FC = () => {
 
                           {allergens.length > 0 && (
                             <p className="text-[11px] text-[#AAA6A1] pt-1">
-                              <strong className="text-[#FAF7F2]">Allergènes renseignés :</strong>{' '}
+                              <strong className="text-[#FAF7F2]">Allergènes :</strong>{' '}
                               {allergens.join(', ')}
                             </p>
                           )}
@@ -730,8 +740,8 @@ export const MenuPage: React.FC = () => {
                                   }
                                   className={`px-3 py-1.5 text-xs rounded-md border font-mono-tabular transition-colors ${
                                     variantOut
-                                      ? 'border-white/10 text-white/30 cursor-not-allowed'
-                                      : 'border-[#D8B77B]/40 text-[#FAF7F2] hover:bg-[#D8B77B] hover:text-[#101014]'
+                                      ? 'border-white/10 text-neutral-400 cursor-not-allowed'
+                                      : 'border-[#91652E]/40 text-[#FAF7F2] hover:bg-[#91652E] hover:text-white'
                                   }`}
                                 >
                                   + {lang === 'fr' ? v.nameFr : v.nameEn} ({formatXaf(v.priceXaf, lang)})
@@ -743,7 +753,7 @@ export const MenuPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => navigate(`/produits/${product.slug}`)}
-                            className="text-xs text-[#D8B77B] hover:underline whitespace-nowrap"
+                            className="text-xs font-semibold text-[#D8B77B] hover:underline whitespace-nowrap"
                           >
                             {t.shop.viewDetails} →
                           </button>

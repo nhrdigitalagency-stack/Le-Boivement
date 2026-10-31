@@ -249,7 +249,7 @@ export const ShopPage: React.FC = () => {
               }}
               className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
                 selectedCategory === 'all'
-                  ? 'bg-[#D8B77B] text-[#101014] font-semibold'
+                  ? 'keep-light-text bg-[#91652E] text-white font-semibold'
                   : 'bg-[#101014] text-[#AAA6A1] hover:text-[#FAF7F2]'
               }`}
             >
@@ -267,7 +267,7 @@ export const ShopPage: React.FC = () => {
                   }}
                   className={`px-3.5 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
                     isSelected
-                      ? 'bg-[#D8B77B] text-[#101014] font-semibold'
+                      ? 'keep-light-text bg-[#91652E] text-white font-semibold'
                       : 'bg-[#101014] text-[#AAA6A1] hover:text-[#FAF7F2]'
                   }`}
                 >
@@ -365,11 +365,6 @@ export const ShopPage: React.FC = () => {
                       <span className="font-mono-tabular text-base font-semibold text-[#FAF7F2]">
                         {formatXaf(defaultVariant?.priceXaf || product.basePriceXaf, lang)}
                       </span>
-                      <p className="text-[11px] text-[#AAA6A1]">
-                        {product.validationStatus === 'validated'
-                          ? t.badges.validated
-                          : t.badges.toConfirm}
-                      </p>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -396,8 +391,8 @@ export const ShopPage: React.FC = () => {
                           }
                           className={`px-3.5 py-2 text-xs font-semibold rounded-md whitespace-nowrap transition-colors ${
                             isOut || !backendOnline
-                              ? 'bg-white/10 text-white/30 cursor-not-allowed'
-                              : 'bg-[#D8B77B] text-[#101014] hover:bg-[#e3c68f]'
+                              ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                              : 'keep-light-text bg-[#91652E] text-white hover:bg-[#7A5324]'
                           }`}
                         >
                           {t.shop.addToCart}
@@ -446,7 +441,10 @@ export const ProductDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
   const { lang, products, categories, navigate, addToCart, settings, backendOnline } = useApp();
   const t = translations[lang];
 
-  const product = products.find((p) => p.slug === slug);
+  const cleanSlug = slug.replace(/-demo$/i, '');
+  const product = products.find(
+    (p) => p.slug === slug || p.slug === cleanSlug || p.slug.replace(/-demo$/i, '') === cleanSlug
+  );
   const [selectedVariantId, setSelectedVariantId] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -532,11 +530,7 @@ export const ProductDetailPage: React.FC<{ slug: string }> = ({ slug }) => {
               <div className="flex flex-wrap items-center gap-2 text-xs text-[#AAA6A1]">
                 <span>{category ? (lang === 'fr' ? category.nameFr : category.nameEn) : ''}</span>
                 <span aria-hidden="true">·</span>
-                <span className="font-mono-tabular">{product.publicRef}</span>
-                <span aria-hidden="true">·</span>
-                <span className="text-[#D8B77B]">
-                  {product.validationStatus === 'validated' ? t.badges.validated : t.badges.toConfirm}
-                </span>
+                <span className="font-mono-tabular text-[#D8B77B]">{product.publicRef}</span>
               </div>
 
               <h1 className="font-serif-display text-3xl sm:text-4xl font-semibold text-[#FAF7F2]">
